@@ -1,0 +1,40 @@
+{
+  "name": "twitter-analysis",
+  "version": "1.0.0",
+  "description": "Perform Activitiy, Sentient, and Word analysis on Twitter profile",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexTing1/Twitter-Analysis.git"
+  },
+  "author": "Alex Ting",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexTing1/Twitter-Analysis/issues"
+  },
+  "homepage": "https://github.com/AlexTing1/Twitter-Analysis#readme",
+  "dependencies": {
+    "nodemon": "^2.0.12",
+    "react": "^17.0.2",
+    "sentiment": "^5.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-react": "^7.14.5",
+    "babel-loader": "^8.2.2",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.0.0"
+  }
+}
