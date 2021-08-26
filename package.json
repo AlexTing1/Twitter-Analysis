@@ -19,6 +19,7 @@
   "dependencies": {
     "nodemon": "^2.0.12",
     "react": "^17.0.2",
+    "react-tagcloud": "^2.1.1",
     "sentiment": "^5.0.2"
   },
   "devDependencies": {

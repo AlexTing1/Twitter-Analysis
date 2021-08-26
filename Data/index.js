@@ -1,7 +1,9 @@
-var Sentiment = require('sentiment');
+const Sentiment = require('sentiment');
 
-var sentiment = new Sentiment();
-var stringToAnalyze = "Cats are stupid. I love rocks. Cars are good. Dogs are cool. Drugs are bad.";
-var result = sentiment.analyze(stringToAnalyze);
+const getSentiment = function(inputString) {
+  const sentiment = new Sentiment();
+  const result = sentiment.analyze(inputString);
+  return result;
+};
 
-console.log(result.score);
+module.export.getSentiment = getSentiment;
