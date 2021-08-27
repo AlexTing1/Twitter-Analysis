@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Sent from 'sentiment';
-import { PieChart } from 'react-minimal-pie-chart';
+import SentimentPieChart from './SentimentPieChart';
 
 function Sentiment({ id }) {
   //const [tweetData, setTweetData] = useState([]);
@@ -24,11 +24,11 @@ function Sentiment({ id }) {
 
     return `${month}/${day}/${year}`;
   } */
-  const getSentiment = function(inputString) {
+  function getSentiment(inputString) {
     const sent = new Sent();
     const result = sent.analyze(inputString);
     return result.score;
-  };
+  }
 
   useEffect(() => {
     axios.get(`/tweets/${id}`, {
@@ -63,6 +63,7 @@ function Sentiment({ id }) {
   return (
     <div>
       this is sentiment
+      <SentimentPieChart data={sentiment} />
     </div>
   );
 }
