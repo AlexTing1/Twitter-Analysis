@@ -3,14 +3,13 @@ import axios from 'axios';
 import Sent from 'sentiment';
 import SentimentPieChart from './SentimentPieChart';
 
-function Sentiment({ id }) {
-  //const [tweetData, setTweetData] = useState([]);
+function Sentiment({ tweetData }) {
+  // const [tweetData, setTweetData] = useState([]);
   const [sentiment, setSentiment] = useState({
     positive: 0,
     neutral: 0,
     negative: 0,
   });
-  const startDate = '2021-08-19T00:00:00Z';
 
   /* function getFormattedDate(dateString) {
     const date = new Date(dateString);
@@ -31,32 +30,24 @@ function Sentiment({ id }) {
   }
 
   useEffect(() => {
-    axios.get(`/tweets/${id}`, {
-      params: {
-        startDate,
-      },
-    })
-      .then((resp) => {
-        //setTweetData(resp.data.data);
-        const tempSentiment = {
-          positive: 0,
-          neutral: 0,
-          negative: 0,
-        };
-        const tweetData = resp.data.data;
-        tweetData.forEach((tweet) => {
-          const currentSent = getSentiment(tweet.text);
-          if (currentSent > 0) {
-            tempSentiment.positive += 1;
-          } else if (currentSent < 0) {
-            tempSentiment.negative += 1;
-          } else {
-            tempSentiment.neutral += 1;
-          }
-        });
-        setSentiment(tempSentiment);
-      });
-  }, [id, startDate]);
+    const tempSentiment = {
+      positive: 0,
+      neutral: 0,
+      negative: 0,
+    };
+
+    tweetData.forEach((tweet) => {
+      const currentSent = getSentiment(tweet.text);
+      if (currentSent > 0) {
+        tempSentiment.positive += 1;
+      } else if (currentSent < 0) {
+        tempSentiment.negative += 1;
+      } else {
+        tempSentiment.neutral += 1;
+      }
+    });
+    setSentiment(tempSentiment);
+  }, [tweetData]);
 
   console.log(sentiment);
 
