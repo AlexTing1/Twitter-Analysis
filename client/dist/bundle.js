@@ -4922,6 +4922,7 @@ function App() {
   const id = '1232319080637616128';
   const startDate = '2021-08-19T00:00:00Z';
   const [tweetData, setTweetData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [likedTweetsData, setLikedTweetsData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/tweets/${id}`, {
       params: {
@@ -4929,6 +4930,9 @@ function App() {
       }
     }).then(resp => {
       setTweetData(resp.data.data);
+    });
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/users/${id}/liked_tweets`).then(resp => {
+      setLikedTweetsData(resp.data.data);
     });
   }, [id, startDate]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Sentiment__WEBPACK_IMPORTED_MODULE_2__.default, {
@@ -4955,8 +4959,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var stopword__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! stopword */ "./node_modules/stopword/lib/stopword.js");
-/* harmony import */ var react_tagcloud__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-tagcloud */ "./node_modules/react-tagcloud/lib/index.js");
-/* harmony import */ var react_wordcloud__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-wordcloud */ "./node_modules/react-wordcloud/dist/index.module.js");
+/* harmony import */ var react_wordcloud__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-wordcloud */ "./node_modules/react-wordcloud/dist/index.module.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _css_popularWords_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./css/popularWords.css */ "./client/src/Components/css/popularWords.css");
 
 
@@ -5006,11 +5011,7 @@ function PopularWords({
   const size = [500, 500];
   const wordCount = getWordCount(); // console.log(wordCountDict);
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "this is popular words", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: _css_popularWords_css__WEBPACK_IMPORTED_MODULE_4__.default.tooltip
-  }, "Hover over me", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-    className: _css_popularWords_css__WEBPACK_IMPORTED_MODULE_4__.default.tooltiptext
-  }, "Tooltip text")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_wordcloud__WEBPACK_IMPORTED_MODULE_3__.default, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "this is popular words", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_wordcloud__WEBPACK_IMPORTED_MODULE_2__.default, {
     callbacks: callbacks,
     size: size,
     options: options,
@@ -5018,6 +5019,9 @@ function PopularWords({
   }));
 }
 
+PopularWords.propTypes = {
+  tweetData: prop_types__WEBPACK_IMPORTED_MODULE_3___default().arrayOf((prop_types__WEBPACK_IMPORTED_MODULE_3___default().object)).isRequired
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PopularWords);
 
 /***/ }),
@@ -5034,10 +5038,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var sentiment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sentiment */ "./node_modules/sentiment/lib/index.js");
-/* harmony import */ var sentiment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sentiment__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var sentiment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sentiment */ "./node_modules/sentiment/lib/index.js");
+/* harmony import */ var sentiment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sentiment__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _SentimentPieChart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SentimentPieChart */ "./client/src/Components/SentimentPieChart.jsx");
 
 
@@ -5064,7 +5068,7 @@ function Sentiment({
   } */
 
   function getSentiment(inputString) {
-    const sent = new (sentiment__WEBPACK_IMPORTED_MODULE_2___default())();
+    const sent = new (sentiment__WEBPACK_IMPORTED_MODULE_1___default())();
     const result = sent.analyze(inputString);
     return result.score;
   }
@@ -5094,6 +5098,9 @@ function Sentiment({
   }));
 }
 
+Sentiment.propTypes = {
+  tweetData: prop_types__WEBPACK_IMPORTED_MODULE_2___default().arrayOf((prop_types__WEBPACK_IMPORTED_MODULE_2___default().object)).isRequired
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Sentiment);
 
 /***/ }),
@@ -5111,7 +5118,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.modern.js");
-/* harmony import */ var _css_sentimentPieChart_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./css/sentimentPieChart.css */ "./client/src/Components/css/sentimentPieChart.css");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _css_sentimentPieChart_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./css/sentimentPieChart.css */ "./client/src/Components/css/sentimentPieChart.css");
+
 
 
 
@@ -5153,13 +5163,20 @@ function SentimentPieChart({
   };
   console.log(pieData);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: _css_sentimentPieChart_css__WEBPACK_IMPORTED_MODULE_2__.default.container
+    className: _css_sentimentPieChart_css__WEBPACK_IMPORTED_MODULE_3__.default.container
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_chartjs_2__WEBPACK_IMPORTED_MODULE_1__.Doughnut, {
     data: pieData,
     responsive: true
   }));
 }
 
+SentimentPieChart.propTypes = {
+  data: prop_types__WEBPACK_IMPORTED_MODULE_2___default().shape({
+    positive: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().number.isRequired),
+    neutral: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().number.isRequired),
+    negative: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().number.isRequired)
+  }).isRequired
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SentimentPieChart);
 
 /***/ }),
@@ -34790,530 +34807,6 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ "./node_modules/randomcolor/randomColor.js":
-/*!*************************************************!*\
-  !*** ./node_modules/randomcolor/randomColor.js ***!
-  \*************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-/* module decorator */ module = __webpack_require__.nmd(module);
-// randomColor by David Merfield under the CC0 license
-// https://github.com/davidmerfield/randomColor/
-
-;(function(root, factory) {
-
-  // Support CommonJS
-  if (true) {
-    var randomColor = factory();
-
-    // Support NodeJS & Component, which allow module.exports to be a function
-    if ( true && module && module.exports) {
-      exports = module.exports = randomColor;
-    }
-
-    // Support CommonJS 1.1.1 spec
-    exports.randomColor = randomColor;
-
-  // Support AMD
-  } else {}
-
-}(this, function() {
-
-  // Seed to get repeatable colors
-  var seed = null;
-
-  // Shared color dictionary
-  var colorDictionary = {};
-
-  // Populate the color dictionary
-  loadColorBounds();
-
-  // check if a range is taken
-  var colorRanges = [];
-
-  var randomColor = function (options) {
-
-    options = options || {};
-
-    // Check if there is a seed and ensure it's an
-    // integer. Otherwise, reset the seed value.
-    if (options.seed !== undefined && options.seed !== null && options.seed === parseInt(options.seed, 10)) {
-      seed = options.seed;
-
-    // A string was passed as a seed
-    } else if (typeof options.seed === 'string') {
-      seed = stringToInteger(options.seed);
-
-    // Something was passed as a seed but it wasn't an integer or string
-    } else if (options.seed !== undefined && options.seed !== null) {
-      throw new TypeError('The seed value must be an integer or string');
-
-    // No seed, reset the value outside.
-    } else {
-      seed = null;
-    }
-
-    var H,S,B;
-
-    // Check if we need to generate multiple colors
-    if (options.count !== null && options.count !== undefined) {
-
-      var totalColors = options.count,
-          colors = [];
-      // Value false at index i means the range i is not taken yet.
-      for (var i = 0; i < options.count; i++) {
-        colorRanges.push(false)
-        }
-      options.count = null;
-
-      while (totalColors > colors.length) {
-
-        // Since we're generating multiple colors,
-        // incremement the seed. Otherwise we'd just
-        // generate the same color each time...
-        if (seed && options.seed) options.seed += 1;
-
-        colors.push(randomColor(options));
-      }
-
-      options.count = totalColors;
-
-      return colors;
-    }
-
-    // First we pick a hue (H)
-    H = pickHue(options);
-
-    // Then use H to determine saturation (S)
-    S = pickSaturation(H, options);
-
-    // Then use S and H to determine brightness (B).
-    B = pickBrightness(H, S, options);
-
-    // Then we return the HSB color in the desired format
-    return setFormat([H,S,B], options);
-  };
-
-  function pickHue(options) {
-    if (colorRanges.length > 0) {
-      var hueRange = getRealHueRange(options.hue)
-
-      var hue = randomWithin(hueRange)
-
-      //Each of colorRanges.length ranges has a length equal approximatelly one step
-      var step = (hueRange[1] - hueRange[0]) / colorRanges.length
-
-      var j = parseInt((hue - hueRange[0]) / step)
-
-      //Check if the range j is taken
-      if (colorRanges[j] === true) {
-        j = (j + 2) % colorRanges.length
-      }
-      else {
-        colorRanges[j] = true
-           }
-
-      var min = (hueRange[0] + j * step) % 359,
-          max = (hueRange[0] + (j + 1) * step) % 359;
-
-      hueRange = [min, max]
-
-      hue = randomWithin(hueRange)
-
-      if (hue < 0) {hue = 360 + hue;}
-      return hue
-    }
-    else {
-      var hueRange = getHueRange(options.hue)
-
-      hue = randomWithin(hueRange);
-      // Instead of storing red as two seperate ranges,
-      // we group them, using negative numbers
-      if (hue < 0) {
-        hue = 360 + hue;
-      }
-
-      return hue;
-    }
-  }
-
-  function pickSaturation (hue, options) {
-
-    if (options.hue === 'monochrome') {
-      return 0;
-    }
-
-    if (options.luminosity === 'random') {
-      return randomWithin([0,100]);
-    }
-
-    var saturationRange = getSaturationRange(hue);
-
-    var sMin = saturationRange[0],
-        sMax = saturationRange[1];
-
-    switch (options.luminosity) {
-
-      case 'bright':
-        sMin = 55;
-        break;
-
-      case 'dark':
-        sMin = sMax - 10;
-        break;
-
-      case 'light':
-        sMax = 55;
-        break;
-   }
-
-    return randomWithin([sMin, sMax]);
-
-  }
-
-  function pickBrightness (H, S, options) {
-
-    var bMin = getMinimumBrightness(H, S),
-        bMax = 100;
-
-    switch (options.luminosity) {
-
-      case 'dark':
-        bMax = bMin + 20;
-        break;
-
-      case 'light':
-        bMin = (bMax + bMin)/2;
-        break;
-
-      case 'random':
-        bMin = 0;
-        bMax = 100;
-        break;
-    }
-
-    return randomWithin([bMin, bMax]);
-  }
-
-  function setFormat (hsv, options) {
-
-    switch (options.format) {
-
-      case 'hsvArray':
-        return hsv;
-
-      case 'hslArray':
-        return HSVtoHSL(hsv);
-
-      case 'hsl':
-        var hsl = HSVtoHSL(hsv);
-        return 'hsl('+hsl[0]+', '+hsl[1]+'%, '+hsl[2]+'%)';
-
-      case 'hsla':
-        var hslColor = HSVtoHSL(hsv);
-        var alpha = options.alpha || Math.random();
-        return 'hsla('+hslColor[0]+', '+hslColor[1]+'%, '+hslColor[2]+'%, ' + alpha + ')';
-
-      case 'rgbArray':
-        return HSVtoRGB(hsv);
-
-      case 'rgb':
-        var rgb = HSVtoRGB(hsv);
-        return 'rgb(' + rgb.join(', ') + ')';
-
-      case 'rgba':
-        var rgbColor = HSVtoRGB(hsv);
-        var alpha = options.alpha || Math.random();
-        return 'rgba(' + rgbColor.join(', ') + ', ' + alpha + ')';
-
-      default:
-        return HSVtoHex(hsv);
-    }
-
-  }
-
-  function getMinimumBrightness(H, S) {
-
-    var lowerBounds = getColorInfo(H).lowerBounds;
-
-    for (var i = 0; i < lowerBounds.length - 1; i++) {
-
-      var s1 = lowerBounds[i][0],
-          v1 = lowerBounds[i][1];
-
-      var s2 = lowerBounds[i+1][0],
-          v2 = lowerBounds[i+1][1];
-
-      if (S >= s1 && S <= s2) {
-
-         var m = (v2 - v1)/(s2 - s1),
-             b = v1 - m*s1;
-
-         return m*S + b;
-      }
-
-    }
-
-    return 0;
-  }
-
-  function getHueRange (colorInput) {
-
-    if (typeof parseInt(colorInput) === 'number') {
-
-      var number = parseInt(colorInput);
-
-      if (number < 360 && number > 0) {
-        return [number, number];
-      }
-
-    }
-
-    if (typeof colorInput === 'string') {
-
-      if (colorDictionary[colorInput]) {
-        var color = colorDictionary[colorInput];
-        if (color.hueRange) {return color.hueRange;}
-      } else if (colorInput.match(/^#?([0-9A-F]{3}|[0-9A-F]{6})$/i)) {
-        var hue = HexToHSB(colorInput)[0];
-        return [ hue, hue ];
-      }
-    }
-
-    return [0,360];
-
-  }
-
-  function getSaturationRange (hue) {
-    return getColorInfo(hue).saturationRange;
-  }
-
-  function getColorInfo (hue) {
-
-    // Maps red colors to make picking hue easier
-    if (hue >= 334 && hue <= 360) {
-      hue-= 360;
-    }
-
-    for (var colorName in colorDictionary) {
-       var color = colorDictionary[colorName];
-       if (color.hueRange &&
-           hue >= color.hueRange[0] &&
-           hue <= color.hueRange[1]) {
-          return colorDictionary[colorName];
-       }
-    } return 'Color not found';
-  }
-
-  function randomWithin (range) {
-    if (seed === null) {
-      //generate random evenly destinct number from : https://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/
-      var golden_ratio = 0.618033988749895
-      var r=Math.random()
-      r += golden_ratio
-      r %= 1
-      return Math.floor(range[0] + r*(range[1] + 1 - range[0]));
-    } else {
-      //Seeded random algorithm from http://indiegamr.com/generate-repeatable-random-numbers-in-js/
-      var max = range[1] || 1;
-      var min = range[0] || 0;
-      seed = (seed * 9301 + 49297) % 233280;
-      var rnd = seed / 233280.0;
-      return Math.floor(min + rnd * (max - min));
-}
-  }
-
-  function HSVtoHex (hsv){
-
-    var rgb = HSVtoRGB(hsv);
-
-    function componentToHex(c) {
-        var hex = c.toString(16);
-        return hex.length == 1 ? '0' + hex : hex;
-    }
-
-    var hex = '#' + componentToHex(rgb[0]) + componentToHex(rgb[1]) + componentToHex(rgb[2]);
-
-    return hex;
-
-  }
-
-  function defineColor (name, hueRange, lowerBounds) {
-
-    var sMin = lowerBounds[0][0],
-        sMax = lowerBounds[lowerBounds.length - 1][0],
-
-        bMin = lowerBounds[lowerBounds.length - 1][1],
-        bMax = lowerBounds[0][1];
-
-    colorDictionary[name] = {
-      hueRange: hueRange,
-      lowerBounds: lowerBounds,
-      saturationRange: [sMin, sMax],
-      brightnessRange: [bMin, bMax]
-    };
-
-  }
-
-  function loadColorBounds () {
-
-    defineColor(
-      'monochrome',
-      null,
-      [[0,0],[100,0]]
-    );
-
-    defineColor(
-      'red',
-      [-26,18],
-      [[20,100],[30,92],[40,89],[50,85],[60,78],[70,70],[80,60],[90,55],[100,50]]
-    );
-
-    defineColor(
-      'orange',
-      [19,46],
-      [[20,100],[30,93],[40,88],[50,86],[60,85],[70,70],[100,70]]
-    );
-
-    defineColor(
-      'yellow',
-      [47,62],
-      [[25,100],[40,94],[50,89],[60,86],[70,84],[80,82],[90,80],[100,75]]
-    );
-
-    defineColor(
-      'green',
-      [63,178],
-      [[30,100],[40,90],[50,85],[60,81],[70,74],[80,64],[90,50],[100,40]]
-    );
-
-    defineColor(
-      'blue',
-      [179, 257],
-      [[20,100],[30,86],[40,80],[50,74],[60,60],[70,52],[80,44],[90,39],[100,35]]
-    );
-
-    defineColor(
-      'purple',
-      [258, 282],
-      [[20,100],[30,87],[40,79],[50,70],[60,65],[70,59],[80,52],[90,45],[100,42]]
-    );
-
-    defineColor(
-      'pink',
-      [283, 334],
-      [[20,100],[30,90],[40,86],[60,84],[80,80],[90,75],[100,73]]
-    );
-
-  }
-
-  function HSVtoRGB (hsv) {
-
-    // this doesn't work for the values of 0 and 360
-    // here's the hacky fix
-    var h = hsv[0];
-    if (h === 0) {h = 1;}
-    if (h === 360) {h = 359;}
-
-    // Rebase the h,s,v values
-    h = h/360;
-    var s = hsv[1]/100,
-        v = hsv[2]/100;
-
-    var h_i = Math.floor(h*6),
-      f = h * 6 - h_i,
-      p = v * (1 - s),
-      q = v * (1 - f*s),
-      t = v * (1 - (1 - f)*s),
-      r = 256,
-      g = 256,
-      b = 256;
-
-    switch(h_i) {
-      case 0: r = v; g = t; b = p;  break;
-      case 1: r = q; g = v; b = p;  break;
-      case 2: r = p; g = v; b = t;  break;
-      case 3: r = p; g = q; b = v;  break;
-      case 4: r = t; g = p; b = v;  break;
-      case 5: r = v; g = p; b = q;  break;
-    }
-
-    var result = [Math.floor(r*255), Math.floor(g*255), Math.floor(b*255)];
-    return result;
-  }
-
-  function HexToHSB (hex) {
-    hex = hex.replace(/^#/, '');
-    hex = hex.length === 3 ? hex.replace(/(.)/g, '$1$1') : hex;
-
-    var red = parseInt(hex.substr(0, 2), 16) / 255,
-          green = parseInt(hex.substr(2, 2), 16) / 255,
-          blue = parseInt(hex.substr(4, 2), 16) / 255;
-
-    var cMax = Math.max(red, green, blue),
-          delta = cMax - Math.min(red, green, blue),
-          saturation = cMax ? (delta / cMax) : 0;
-
-    switch (cMax) {
-      case red: return [ 60 * (((green - blue) / delta) % 6) || 0, saturation, cMax ];
-      case green: return [ 60 * (((blue - red) / delta) + 2) || 0, saturation, cMax ];
-      case blue: return [ 60 * (((red - green) / delta) + 4) || 0, saturation, cMax ];
-    }
-  }
-
-  function HSVtoHSL (hsv) {
-    var h = hsv[0],
-      s = hsv[1]/100,
-      v = hsv[2]/100,
-      k = (2-s)*v;
-
-    return [
-      h,
-      Math.round(s*v / (k<1 ? k : 2-k) * 10000) / 100,
-      k/2 * 100
-    ];
-  }
-
-  function stringToInteger (string) {
-    var total = 0
-    for (var i = 0; i !== string.length; i++) {
-      if (total >= Number.MAX_SAFE_INTEGER) break;
-      total += string.charCodeAt(i)
-    }
-    return total
-  }
-
-  // get The range of given hue when options.count!=0
-  function getRealHueRange(colorHue)
-  { if (!isNaN(colorHue)) {
-    var number = parseInt(colorHue);
-
-    if (number < 360 && number > 0) {
-      return getColorInfo(colorHue).hueRange
-    }
-  }
-    else if (typeof colorHue === 'string') {
-
-      if (colorDictionary[colorHue]) {
-        var color = colorDictionary[colorHue];
-
-        if (color.hueRange) {
-          return color.hueRange
-       }
-    } else if (colorHue.match(/^#?([0-9A-F]{3}|[0-9A-F]{6})$/i)) {
-        var hue = HexToHSB(colorHue)[0]
-        return getColorInfo(hue).hueRange
-    }
-  }
-
-    return [0,360]
-}
-  return randomColor;
-}));
-
-
-/***/ }),
-
 /***/ "./node_modules/react-chartjs-2/dist/index.modern.js":
 /*!***********************************************************!*\
   !*** ./node_modules/react-chartjs-2/dist/index.modern.js ***!
@@ -62101,318 +61594,6 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "./node_modules/react-tagcloud/lib/TagCloud.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/react-tagcloud/lib/TagCloud.js ***!
-  \*****************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.TagCloud = TagCloud;
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
-
-var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _shuffleArray = _interopRequireDefault(__webpack_require__(/*! shuffle-array */ "./node_modules/shuffle-array/index.js"));
-
-var _randomcolor = _interopRequireDefault(__webpack_require__(/*! randomcolor */ "./node_modules/randomcolor/randomColor.js"));
-
-var _defaultRenderer = __webpack_require__(/*! ./defaultRenderer */ "./node_modules/react-tagcloud/lib/defaultRenderer.js");
-
-var _helpers = __webpack_require__(/*! ./helpers */ "./node_modules/react-tagcloud/lib/helpers.js");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-var handlersPropNames = ['onClick', 'onDoubleClick', 'onMouseMove', 'onMouseOver', 'onMouseOut'];
-var cloudPropNames = ['tags', 'shuffle', 'renderer', 'maxSize', 'minSize', 'colorOptions', 'disableRandomColor', 'randomNumberGenerator'];
-
-function generateColor(tag, _ref) {
-  var disableRandomColor = _ref.disableRandomColor,
-      colorOptions = _ref.colorOptions;
-
-  if (tag.color) {
-    return tag.color;
-  }
-
-  if (disableRandomColor) {
-    return undefined;
-  }
-
-  return (0, _randomcolor["default"])(colorOptions);
-}
-
-function withTagCloudHandlers(elem, tag, cloudHandlers) {
-  var origHandlers = (0, _helpers.pick)(elem.props, handlersPropNames);
-  var props = (0, _helpers.keys)(cloudHandlers).reduce(function (acc, handlerName) {
-    acc[handlerName] = function (e) {
-      cloudHandlers[handlerName] && cloudHandlers[handlerName](tag, e);
-      origHandlers[handlerName] && origHandlers(e);
-    };
-
-    return acc;
-  }, {});
-  return _react["default"].cloneElement(elem, props);
-}
-
-function renderTags(props, data) {
-  var minSize = props.minSize,
-      maxSize = props.maxSize;
-  var counts = data.map(function (_ref2) {
-    var tag = _ref2.tag;
-    return tag.count;
-  }),
-      min = Math.min.apply(Math, _toConsumableArray(counts)),
-      max = Math.max.apply(Math, _toConsumableArray(counts));
-  var cloudHandlers = (0, _helpers.pick)(props, handlersPropNames);
-  return data.map(function (_ref3) {
-    var tag = _ref3.tag,
-        color = _ref3.color;
-    var fontSize = (0, _helpers.fontSizeConverter)(tag.count, min, max, minSize, maxSize);
-    var elem = props.renderer(tag, fontSize, color);
-    return withTagCloudHandlers(elem, tag, cloudHandlers);
-  });
-}
-
-function randomize(props) {
-  var tags = props.tags,
-      shuffle = props.shuffle,
-      randomNumberGenerator = props.randomNumberGenerator;
-  var data = tags.map(function (tag) {
-    return {
-      tag: tag,
-      color: generateColor(tag, props)
-    };
-  });
-  return shuffle ? (0, _shuffleArray["default"])(data, {
-    rng: randomNumberGenerator
-  }) : data;
-}
-
-function TagCloud(props) {
-  var _useState = (0, _react.useState)([]),
-      _useState2 = _slicedToArray(_useState, 2),
-      data = _useState2[0],
-      setData = _useState2[1];
-
-  var tagsComparison = props.tags.map(function (t) {
-    return t.key || t.value;
-  }).join(':'); // randomize (color, shuffle) when tags or certain props change
-
-  (0, _react.useEffect)(function () {
-    setData(randomize(props));
-  }, [props.colorOptions, props.shuffle, props.disableRandomColor, tagsComparison]);
-  var other = (0, _helpers.omit)(props, [].concat(cloudPropNames, handlersPropNames));
-  return /*#__PURE__*/_react["default"].createElement("div", other, renderTags(props, data));
-}
-
-TagCloud.propTypes = {
-  tags: _propTypes["default"].array.isRequired,
-  maxSize: _propTypes["default"].number.isRequired,
-  minSize: _propTypes["default"].number.isRequired,
-  shuffle: _propTypes["default"].bool,
-  colorOptions: _propTypes["default"].object,
-  disableRandomColor: _propTypes["default"].bool,
-  renderer: _propTypes["default"].func,
-  className: _propTypes["default"].string,
-  randomNumberGenerator: _propTypes["default"].func
-};
-TagCloud.defaultProps = {
-  renderer: _defaultRenderer.defaultRenderer,
-  shuffle: true,
-  className: 'tag-cloud',
-  colorOptions: {}
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-tagcloud/lib/defaultRenderer.js":
-/*!************************************************************!*\
-  !*** ./node_modules/react-tagcloud/lib/defaultRenderer.js ***!
-  \************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.defaultRenderer = void 0;
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-var defaultRenderer = function defaultRenderer(tag, size, color) {
-  var _ref = tag.props || {},
-      className = _ref.className,
-      style = _ref.style,
-      props = _objectWithoutProperties(_ref, ["className", "style"]);
-
-  var fontSize = size + 'px';
-  var key = tag.key || tag.value;
-
-  var tagStyle = _objectSpread({}, styles, {
-    color: color,
-    fontSize: fontSize
-  }, style);
-
-  var tagClassName = 'tag-cloud-tag';
-
-  if (className) {
-    tagClassName += ' ' + className;
-  }
-
-  return /*#__PURE__*/_react["default"].createElement("span", _extends({
-    className: tagClassName,
-    style: tagStyle,
-    key: key
-  }, props), tag.value);
-};
-
-exports.defaultRenderer = defaultRenderer;
-var styles = {
-  margin: '0px 3px',
-  verticalAlign: 'middle',
-  display: 'inline-block'
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-tagcloud/lib/helpers.js":
-/*!****************************************************!*\
-  !*** ./node_modules/react-tagcloud/lib/helpers.js ***!
-  \****************************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.pick = pick;
-exports.keys = keys;
-exports.omit = exports.fontSizeConverter = void 0;
-
-/**
- * Computes appropriate font size of tag.
- */
-var fontSizeConverter = function fontSizeConverter(count, min, max, minSize, maxSize) {
-  if (max - min === 0) {
-    // handle devision by zero
-    return Math.round((minSize + maxSize) / 2);
-  }
-
-  return Math.round((count - min) * (maxSize - minSize) / (max - min) + minSize);
-};
-/**
- * Creates an object composed of not omitted object properties.
- */
-
-
-exports.fontSizeConverter = fontSizeConverter;
-
-var omit = function omit(obj, keys) {
-  return Object.keys(obj).reduce(function (r, key) {
-    if (!~keys.indexOf(key)) {
-      r[key] = obj[key];
-    }
-
-    return r;
-  }, {});
-};
-/**
- * Creates an object composed of the picked object properties.
- */
-
-
-exports.omit = omit;
-
-function pick(obj, keys) {
-  return keys.reduce(function (picked, key) {
-    picked[key] = obj[key];
-    return picked;
-  }, {});
-}
-/**
- * Returns an array of object keys.
- */
-
-
-function keys(obj) {
-  return Object.keys(obj);
-}
-
-/***/ }),
-
-/***/ "./node_modules/react-tagcloud/lib/index.js":
-/*!**************************************************!*\
-  !*** ./node_modules/react-tagcloud/lib/index.js ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-Object.defineProperty(exports, "TagCloud", ({
-  enumerable: true,
-  get: function get() {
-    return _TagCloud.TagCloud;
-  }
-}));
-
-var _TagCloud = __webpack_require__(/*! ./TagCloud */ "./node_modules/react-tagcloud/lib/TagCloud.js");
-
-/***/ }),
-
 /***/ "./node_modules/react-wordcloud/dist/index.module.js":
 /*!***********************************************************!*\
   !*** ./node_modules/react-wordcloud/dist/index.module.js ***!
@@ -68141,99 +67322,6 @@ module.exports = function(input) {
         .trim()
         .split(' ');
 };
-
-
-/***/ }),
-
-/***/ "./node_modules/shuffle-array/index.js":
-/*!*********************************************!*\
-  !*** ./node_modules/shuffle-array/index.js ***!
-  \*********************************************/
-/***/ ((module) => {
-
-"use strict";
-
-
-/**
- * Randomize the order of the elements in a given array.
- * @param {Array} arr - The given array.
- * @param {Object} [options] - Optional configuration options.
- * @param {Boolean} [options.copy] - Sets if should return a shuffled copy of the given array. By default it's a falsy value.
- * @param {Function} [options.rng] - Specifies a custom random number generator.
- * @returns {Array}
- */
-function shuffle(arr, options) {
-
-  if (!Array.isArray(arr)) {
-    throw new Error('shuffle expect an array as parameter.');
-  }
-
-  options = options || {};
-
-  var collection = arr,
-      len = arr.length,
-      rng = options.rng || Math.random,
-      random,
-      temp;
-
-  if (options.copy === true) {
-    collection = arr.slice();
-  }
-
-  while (len) {
-    random = Math.floor(rng() * len);
-    len -= 1;
-    temp = collection[len];
-    collection[len] = collection[random];
-    collection[random] = temp;
-  }
-
-  return collection;
-};
-
-/**
- * Pick one or more random elements from the given array.
- * @param {Array} arr - The given array.
- * @param {Object} [options] - Optional configuration options.
- * @param {Number} [options.picks] - Specifies how many random elements you want to pick. By default it picks 1.
- * @param {Function} [options.rng] - Specifies a custom random number generator.
- * @returns {Object}
- */
-shuffle.pick = function(arr, options) {
-
-  if (!Array.isArray(arr)) {
-    throw new Error('shuffle.pick() expect an array as parameter.');
-  }
-
-  options = options || {};
-
-  var rng = options.rng || Math.random,
-      picks = options.picks || 1;
-
-  if (typeof picks === 'number' && picks !== 1) {
-    var len = arr.length,
-        collection = arr.slice(),
-        random = [],
-        index;
-
-    while (picks && len) {
-      index = Math.floor(rng() * len);
-      random.push(collection[index]);
-      collection.splice(index, 1);
-      len -= 1;
-      picks -= 1;
-    }
-
-    return random;
-  }
-
-  return arr[Math.floor(rng() * arr.length)];
-};
-
-/**
- * Expose
- */
-module.exports = shuffle;
 
 
 /***/ }),

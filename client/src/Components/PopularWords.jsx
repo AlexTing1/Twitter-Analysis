@@ -1,7 +1,7 @@
 import React from 'react';
 import stopword from 'stopword';
-import { TagCloud } from 'react-tagcloud';
 import ReactWordCloud from 'react-wordcloud';
+import PropTypes from 'prop-types';
 import css from './css/popularWords.css';
 //  react-wordcloud
 function PopularWords({ tweetData }) {
@@ -48,10 +48,6 @@ function PopularWords({ tweetData }) {
   return (
     <div>
       this is popular words
-      <div className={css.tooltip}>
-        Hover over me
-        <span className={css.tooltiptext}>Tooltip text</span>
-      </div>
       <ReactWordCloud
         callbacks={callbacks}
         size={size}
@@ -61,5 +57,9 @@ function PopularWords({ tweetData }) {
     </div>
   );
 }
+
+PopularWords.propTypes = {
+  tweetData: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default PopularWords;
