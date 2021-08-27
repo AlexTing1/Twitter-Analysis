@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { PieChart } from 'react-minimal-pie-chart';
+import React from 'react';
+import { Doughnut } from 'react-chartjs-2';
+import css from './css/sentimentPieChart.css';
 
 function SentimentPieChart({ data }) {
-  const [pieData, setPieData] = useState([]);
+  /* const [pieData, setPieData] = useState([]);
   useEffect(() => {
     const tempPieData = [];
     const keys = Object.keys(data);
@@ -23,14 +24,25 @@ function SentimentPieChart({ data }) {
     });
 
     setPieData(tempPieData);
-  }, [data]);
+  }, [data]); */
+  // eslint-disable-next-line max-len
+  const percentNonNeg = ((data.positive + data.neutral) / (data.positive + data.neutral + data.negative)) * 100;
 
+  const pieData = {
+    labels: ['Positive', 'Neutral', 'Negative'],
+    datasets: [{
+      data: [data.positive, data.neutral, data.negative],
+      backgroundColor: ['#42F300', '#8F8F8F', '#FFC900'],
+      hoverBackgroundColor: ['#42F300', '#8F8F8F', '#FFC900'],
+
+    }],
+    text: `${percentNonNeg}%`,
+  };
   console.log(pieData);
 
   return (
-    <div>
-      this is sendpiechart
-      <PieChart data={pieData} />
+    <div className={css.container}>
+      <Doughnut data={pieData} responsive={true} />
     </div>
   );
 }

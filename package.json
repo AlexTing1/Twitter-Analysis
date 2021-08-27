@@ -21,16 +21,19 @@
   "dependencies": {
     "axios": "^0.21.1",
     "babel": "^6.23.0",
+    "chart.js": "^3.5.1",
     "date": "^1.0.2",
     "express": "^4.17.1",
     "format": "^0.2.2",
     "nodemon": "^2.0.12",
     "path": "^0.12.7",
     "react": "^17.0.2",
+    "react-chartjs-2": "^3.0.4",
     "react-dom": "^17.0.2",
     "react-minimal-pie-chart": "^8.2.0",
     "react-tagcloud": "^2.1.1",
-    "sentiment": "^5.0.2"
+    "sentiment": "^5.0.2",
+    "stopword": "^1.0.11"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
