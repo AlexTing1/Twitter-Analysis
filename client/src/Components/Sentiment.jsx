@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Sent from 'sentiment';
+import PropTypes from 'prop-types';
 import SentimentPieChart from './SentimentPieChart';
 
 function Sentiment({ tweetData }) {
@@ -58,5 +58,9 @@ function Sentiment({ tweetData }) {
     </div>
   );
 }
+
+Sentiment.propTypes = {
+  tweetData: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default Sentiment;

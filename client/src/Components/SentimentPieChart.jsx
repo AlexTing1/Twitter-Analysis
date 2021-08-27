@@ -1,5 +1,6 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
+import PropTypes from 'prop-types';
 import css from './css/sentimentPieChart.css';
 
 function SentimentPieChart({ data }) {
@@ -42,9 +43,17 @@ function SentimentPieChart({ data }) {
 
   return (
     <div className={css.container}>
-      <Doughnut data={pieData} responsive={true} />
+      <Doughnut data={pieData} responsive />
     </div>
   );
 }
+
+SentimentPieChart.propTypes = {
+  data: PropTypes.shape({
+    positive: PropTypes.number.isRequired,
+    neutral: PropTypes.number.isRequired,
+    negative: PropTypes.number.isRequired,
+  }).isRequired,
+};
 
 export default SentimentPieChart;

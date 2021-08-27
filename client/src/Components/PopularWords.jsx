@@ -1,6 +1,7 @@
 import React from 'react';
 import stopword from 'stopword';
-import { TagCloud } from 'react-tagcloud';
+import ReactWordCloud from 'react-wordcloud';
+import PropTypes from 'prop-types';
 import css from './css/popularWords.css';
 //  react-wordcloud
 function PopularWords({ tweetData }) {
@@ -23,7 +24,7 @@ function PopularWords({ tweetData }) {
     const wordTrackerKeys = Object.keys(wordTracker);
     wordTrackerKeys.forEach((key) => {
       if (wordTracker[key] > 1) {
-        const current = { value: key, count: wordTracker[key] };
+        const current = { text: key, value: wordTracker[key] };
         result.push(current);
       }
     });
@@ -31,24 +32,34 @@ function PopularWords({ tweetData }) {
     return result;
   }
 
+  const callbacks = {
+    getWordTooltip: (word) => `${word.text} (${word.value}) `,
+  };
+
+  const options = {
+    enableTooltip: true,
+    fontSizes: [25, 100],
+  };
+
+  const size = [500, 500];
+
   const wordCount = getWordCount();
   // console.log(wordCountDict);
   return (
-    <div className={css.container}>
+    <div>
       this is popular words
-      <div className={css.tooltip}>
-        Hover over me
-        <span className={css.tooltiptext}>Tooltip text</span>
-      </div>
-      <TagCloud
-        minSize={24}
-        maxSize={70}
-        tags={wordCount}
-        /* onClick={(tag) => alert(`'${tag.value}' was selected!`)} */
-        onMouseOver={(tag) => (<div>testing</div>)}
+      <ReactWordCloud
+        callbacks={callbacks}
+        size={size}
+        options={options}
+        words={wordCount}
       />
     </div>
   );
 }
+
+PopularWords.propTypes = {
+  tweetData: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default PopularWords;
