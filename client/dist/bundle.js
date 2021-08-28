@@ -4913,6 +4913,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Sentiment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Sentiment */ "./client/src/Components/Sentiment.jsx");
 /* harmony import */ var _PopularWords__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PopularWords */ "./client/src/Components/PopularWords.jsx");
+/* harmony import */ var _Graph__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Graph */ "./client/src/Components/Graph.jsx");
+
 
 
 
@@ -4939,10 +4941,163 @@ function App() {
     tweetData: tweetData
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_PopularWords__WEBPACK_IMPORTED_MODULE_3__.default, {
     tweetData: tweetData
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Graph__WEBPACK_IMPORTED_MODULE_4__.default, {
+    tweetData: tweetData,
+    likedTweetsData: likedTweetsData
   }));
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
+
+/***/ }),
+
+/***/ "./client/src/Components/Graph.jsx":
+/*!*****************************************!*\
+  !*** ./client/src/Components/Graph.jsx ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.modern.js");
+
+
+
+function Graph({
+  tweetData,
+  likedTweetsData
+}) {
+  const [currentTimeIndex, setCurrentTimeIndex] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('By Day');
+  const [currentTimeRange, setCurrentTimeRange] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('7 days'); // data structure for Line[{x: xValue, y: yValue}]
+
+  const [sevenDays, setSevenDays] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
+    x: 0,
+    y: 0
+  }]);
+  const [fourteenDays, setFourteenDays] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
+    x: 0,
+    y: 0
+  }]);
+  const [thirtyDays, setThirtyDays] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
+    x: 0,
+    y: 0
+  }]);
+  const [sevenWeeks, setSevenWeeks] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
+    x: 0,
+    y: 0
+  }]);
+  const [tenWeeks, setTenWeeks] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
+    x: 0,
+    y: 0
+  }]);
+  const [twelveWeeks, setTweleveWeeks] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
+    x: 0,
+    y: 0
+  }]);
+  const [threeMonths, setThreeMonths] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
+    x: 0,
+    y: 0
+  }]);
+  const [fourtMonths, setFourMonths] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
+    x: 0,
+    y: 0
+  }]);
+  const [sixMonths, setSixMonths] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
+    x: 0,
+    y: 0
+  }]);
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    let month = (1 + date.getMonth()).toString();
+    month = month.length > 1 ? month : `0${month}`;
+    let day = date.getDate().toString();
+    day = day.length > 1 ? day : `0${day}`;
+    return `${month}/${day}/${year}`;
+  }
+
+  function LastDays(timeFrame) {
+    const result = [];
+
+    for (let i = 0; i < timeFrame; i += 1) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      result.push(formatDate(d));
+    }
+
+    return result;
+  }
+
+  function formatLikedData(timeFrame) {
+    const likedData = {};
+  }
+
+  function onChangeIndex() {
+    const timeIndex = document.getElementById('timeIndex');
+    const selectedText = timeIndex.options[timeIndex.selectedIndex].text;
+    setCurrentTimeIndex(selectedText);
+
+    if (selectedText === 'By Month') {
+      setCurrentTimeRange('3 months');
+    } else if (selectedText === 'By Week') {
+      setCurrentTimeRange('7 weeks');
+    } else {
+      setCurrentTimeRange('7 days');
+    }
+  }
+
+  function onChangeRange() {
+    const timeHorizon = document.getElementById('timeHorizon');
+    const selectedTime = timeHorizon.options[timeHorizon.selectedIndex].text;
+    setCurrentTimeRange(selectedTime);
+  }
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {}, [tweetData, likedTweetsData]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "this is graph", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
+    id: "timeIndex",
+    onChange: onChangeIndex
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "By Day"
+  }, "By Day"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "By Week"
+  }, "By Week"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "By Month"
+  }, "By Month")), currentTimeIndex === 'By Day' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
+    id: "timeHorizon",
+    onChange: onChangeRange
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "7 days"
+  }, "7 days"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "14 days"
+  }, "14 days"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "30 days"
+  }, "30 days")), currentTimeIndex === 'By Week' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
+    id: "timeHorizon",
+    onChange: onChangeRange
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "7 weeks"
+  }, "7 weeks"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "10 weeks"
+  }, "10 weeks"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "12 weeks"
+  }, "12 weeks")), currentTimeIndex === 'By Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
+    id: "timeHorizon",
+    onChange: onChangeRange
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "3 months"
+  }, "3 months"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "4 months"
+  }, "4 months"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "6 months"
+  }, "6 months")));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Graph);
 
 /***/ }),
 
@@ -5057,15 +5212,6 @@ function Sentiment({
     neutral: 0,
     negative: 0
   });
-  /* function getFormattedDate(dateString) {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-     let month = (1 + date.getMonth()).toString();
-    month = month.length > 1 ? month : `0${month}`;
-     let day = date.getDate().toString();
-    day = day.length > 1 ? day : `0${day}`;
-     return `${month}/${day}/${year}`;
-  } */
 
   function getSentiment(inputString) {
     const sent = new (sentiment__WEBPACK_IMPORTED_MODULE_1___default())();

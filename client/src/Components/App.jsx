@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Sentiment from './Sentiment';
 import PopularWords from './PopularWords';
+import Graph from './Graph';
 
 function App() {
   const id = '1232319080637616128';
@@ -27,6 +28,7 @@ function App() {
     <div>
       <Sentiment tweetData={tweetData} />
       <PopularWords tweetData={tweetData} />
+      <Graph tweetData={tweetData} likedTweetsData={likedTweetsData} />
     </div>
 
   );
