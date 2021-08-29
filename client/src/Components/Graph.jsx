@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
+import PropTypes from 'prop-types';
 
 function Graph({ tweetData, likedTweetsData }) {
   const [currentTimeIndex, setCurrentTimeIndex] = useState('By Day');
@@ -18,6 +19,9 @@ function Graph({ tweetData, likedTweetsData }) {
   const [fourtMonths, setFourMonths] = useState([{ x: 0, y: 0 }]);
   const [sixMonths, setSixMonths] = useState([{ x: 0, y: 0 }]);
 
+  const [likeDataSet, setLikedDataSet] = useState([{ x: 0, y: 0 }]);
+  const [tweetDataSet, setTweetDataSet] = useState([{ x: 0, y: 0 }]);
+  const [retweetDataSet, setRetweetDataSet] = useState([{ x: 0, y: 0 }]);
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -32,14 +36,13 @@ function Graph({ tweetData, likedTweetsData }) {
     return `${month}/${day}/${year}`;
   }
 
-  function LastDays(timeFrame) {
-    const result = [];
+  function lastDays(timeFrame) {
+    const result = {};
     for (let i = 0; i < timeFrame; i += 1) {
       const d = new Date();
-      d.setDate(d.getDate() - i);
-      result.push(formatDate(d));
+      //d.setDate(d.getDate() - i);
+      result[formatDate(d.setDate(d.getDate() - i))] = 1;
     }
-
     return result;
   }
 
@@ -64,6 +67,28 @@ function Graph({ tweetData, likedTweetsData }) {
     const timeHorizon = document.getElementById('timeHorizon');
     const selectedTime = timeHorizon.options[timeHorizon.selectedIndex].text;
     setCurrentTimeRange(selectedTime);
+  }
+
+  function getLikedData(timeHorizon, type) {
+    const dates = lastDays(timeHorizon);
+    const dateTracker = {};
+    const result = [];
+    for (let i = 0; i < likedTweetsData.length; i += 1) {
+      const current = likedTweetsData[i];
+      const currentDate = formatDate(current.created_at);
+      if (dateTracker[currentDate] === undefined) {
+        dateTracker[currentDate] = 1;
+      } else {
+        dateTracker[currentDate] += 1;
+      }
+    }
+
+    const dateTrackerKeys = Object.keys(dateTracker);
+
+    for (let i = 0; i < dateTrackerKeys.length; i += 1) {
+      const currentKey = dateTrackerKeys[i];
+
+    }
   }
 
   useEffect(() => {
@@ -104,5 +129,10 @@ function Graph({ tweetData, likedTweetsData }) {
     </div>
   );
 }
+
+Graph.propTypes = {
+  likedTweetsData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  tweetData: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default Graph;

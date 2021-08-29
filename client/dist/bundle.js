@@ -4964,6 +4964,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.modern.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 
@@ -5010,6 +5013,18 @@ function Graph({
     x: 0,
     y: 0
   }]);
+  const [likeDataSet, setLikedDataSet] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
+    x: 0,
+    y: 0
+  }]);
+  const [tweetDataSet, setTweetDataSet] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
+    x: 0,
+    y: 0
+  }]);
+  const [retweetDataSet, setRetweetDataSet] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
+    x: 0,
+    y: 0
+  }]);
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -5021,13 +5036,13 @@ function Graph({
     return `${month}/${day}/${year}`;
   }
 
-  function LastDays(timeFrame) {
-    const result = [];
+  function lastDays(timeFrame) {
+    const result = {};
 
     for (let i = 0; i < timeFrame; i += 1) {
-      const d = new Date();
-      d.setDate(d.getDate() - i);
-      result.push(formatDate(d));
+      const d = new Date(); //d.setDate(d.getDate() - i);
+
+      result[formatDate(d.setDate(d.getDate() - i))] = 1;
     }
 
     return result;
@@ -5055,6 +5070,29 @@ function Graph({
     const timeHorizon = document.getElementById('timeHorizon');
     const selectedTime = timeHorizon.options[timeHorizon.selectedIndex].text;
     setCurrentTimeRange(selectedTime);
+  }
+
+  function getLikedData(timeHorizon, type) {
+    const dates = lastDays(timeHorizon);
+    const dateTracker = {};
+    const result = [];
+
+    for (let i = 0; i < likedTweetsData.length; i += 1) {
+      const current = likedTweetsData[i];
+      const currentDate = formatDate(current.created_at);
+
+      if (dateTracker[currentDate] === undefined) {
+        dateTracker[currentDate] = 1;
+      } else {
+        dateTracker[currentDate] += 1;
+      }
+    }
+
+    const dateTrackerKeys = Object.keys(dateTracker);
+
+    for (let i = 0; i < dateTrackerKeys.length; i += 1) {
+      const currentKey = dateTrackerKeys[i];
+    }
   }
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {}, [tweetData, likedTweetsData]);
@@ -5097,6 +5135,10 @@ function Graph({
   }, "6 months")));
 }
 
+Graph.propTypes = {
+  likedTweetsData: prop_types__WEBPACK_IMPORTED_MODULE_2___default().arrayOf((prop_types__WEBPACK_IMPORTED_MODULE_2___default().object)).isRequired,
+  tweetData: prop_types__WEBPACK_IMPORTED_MODULE_2___default().arrayOf((prop_types__WEBPACK_IMPORTED_MODULE_2___default().object)).isRequired
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Graph);
 
 /***/ }),
