@@ -46,10 +46,6 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
     return result;
   }
 
-  function formatLikedData(timeFrame) {
-    const likedData = {};
-  }
-
   function onChangeIndex() {
     const timeIndex = document.getElementById('timeIndex');
     const selectedText = timeIndex.options[timeIndex.selectedIndex].text;
