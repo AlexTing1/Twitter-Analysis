@@ -5003,7 +5003,7 @@ function Graph({
   retweetData
 }) {
   const [currentTimeIndex, setCurrentTimeIndex] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('By Day');
-  const [currentTimeRange, setCurrentTimeRange] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('7 days'); // data structure for Line[{x: xValue, y: yValue}]
+  const [currentTimeRange, setCurrentTimeRange] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('7'); // data structure for Line[{x: xValue, y: yValue}]
 
   const [sevenDays, setSevenDays] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
     x: 0,
@@ -5093,8 +5093,8 @@ function Graph({
 
   function onChangeRange() {
     const timeHorizon = document.getElementById('timeHorizon');
-    const selectedTime = timeHorizon.options[timeHorizon.selectedIndex].text;
-    setCurrentTimeRange(selectedTime);
+    const selectedTime = timeHorizon.options[timeHorizon.selectedIndex].text.split(' ')[0];
+    setCurrentTimeRange(parseInt(selectedTime, 10));
   }
 
   function getDataDay(timeHorizon, dataSet) {
@@ -5131,10 +5131,10 @@ function Graph({
   }
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    setLikedDataSet(getDataDay(7, likedTweetsData));
-    setTweetDataSet(getDataDay(7, tweetData));
-    setRetweetDataSet(getDataDay(7, retweetData));
-  }, [tweetData, likedTweetsData, retweetData]);
+    setLikedDataSet(getDataDay(currentTimeRange, likedTweetsData));
+    setTweetDataSet(getDataDay(currentTimeRange, tweetData));
+    setRetweetDataSet(getDataDay(currentTimeRange, retweetData));
+  }, [tweetData, likedTweetsData, retweetData, currentTimeRange]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "this is graph", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
     id: "timeIndex",
     onChange: onChangeIndex
@@ -5199,6 +5199,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.modern.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 
@@ -5207,25 +5210,23 @@ function LineGraph({
   tweetData,
   retweetData
 }) {
-  console.log("this is likeData: ", likeData);
-  console.log('this is tweetData: ', tweetData);
   const data = {
     labels: likeData[0],
     datasets: [{
       label: 'liked Tweets Data',
       data: likeData[1],
       fill: false,
-      borderColor: '31F21A'
+      borderColor: '#31F21A'
     }, {
       label: 'Tweets Data',
       data: tweetData[1],
       fill: false,
-      borderColor: 'E7E72B'
+      borderColor: '#E7E72B'
     }, {
       label: 'Retweets Data',
       data: retweetData[1],
       fill: false,
-      borderColor: '001A7A'
+      borderColor: '#001A7A'
     }]
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_chartjs_2__WEBPACK_IMPORTED_MODULE_1__.Line, {
@@ -5233,6 +5234,11 @@ function LineGraph({
   }));
 }
 
+LineGraph.propTypes = {
+  likeData: prop_types__WEBPACK_IMPORTED_MODULE_2___default().arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_2___default().arrayOf((prop_types__WEBPACK_IMPORTED_MODULE_2___default().numbers))).isRequired,
+  tweetData: prop_types__WEBPACK_IMPORTED_MODULE_2___default().arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_2___default().arrayOf((prop_types__WEBPACK_IMPORTED_MODULE_2___default().numbers))).isRequired,
+  retweetData: prop_types__WEBPACK_IMPORTED_MODULE_2___default().arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_2___default().arrayOf((prop_types__WEBPACK_IMPORTED_MODULE_2___default().numbers))).isRequired
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LineGraph);
 
 /***/ }),

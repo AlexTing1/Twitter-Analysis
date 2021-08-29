@@ -4,7 +4,7 @@ import LineGraph from './LineGraph';
 
 function Graph({ tweetData, likedTweetsData, retweetData }) {
   const [currentTimeIndex, setCurrentTimeIndex] = useState('By Day');
-  const [currentTimeRange, setCurrentTimeRange] = useState('7 days');
+  const [currentTimeRange, setCurrentTimeRange] = useState('7');
 
   // data structure for Line[{x: xValue, y: yValue}]
   const [sevenDays, setSevenDays] = useState([{ x: 0, y: 0 }]);
@@ -65,8 +65,8 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
 
   function onChangeRange() {
     const timeHorizon = document.getElementById('timeHorizon');
-    const selectedTime = timeHorizon.options[timeHorizon.selectedIndex].text;
-    setCurrentTimeRange(selectedTime);
+    const selectedTime = timeHorizon.options[timeHorizon.selectedIndex].text.split(' ')[0];
+    setCurrentTimeRange(parseInt(selectedTime, 10));
   }
 
   function getDataDay(timeHorizon, dataSet) {
@@ -102,10 +102,10 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
   }
 
   useEffect(() => {
-    setLikedDataSet(getDataDay(7, likedTweetsData));
-    setTweetDataSet(getDataDay(7, tweetData));
-    setRetweetDataSet(getDataDay(7, retweetData));
-  }, [tweetData, likedTweetsData, retweetData]);
+    setLikedDataSet(getDataDay(currentTimeRange, likedTweetsData));
+    setTweetDataSet(getDataDay(currentTimeRange, tweetData));
+    setRetweetDataSet(getDataDay(currentTimeRange, retweetData));
+  }, [tweetData, likedTweetsData, retweetData, currentTimeRange]);
 
   return (
     <div>
