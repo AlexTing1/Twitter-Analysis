@@ -4922,19 +4922,45 @@ __webpack_require__.r(__webpack_exports__);
 
 function App() {
   const id = '1232319080637616128';
-  const startDate = '2021-08-19T00:00:00Z';
+  const startDate = '2021-02-01T00:00:00Z';
   const [tweetData, setTweetData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [likedTweetsData, setLikedTweetsData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [retweetData, setRetweetData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+
+  function getRetweets(data) {
+    const result = [];
+
+    for (let i = 0; i < data.length; i += 1) {
+      const currentText = data[i].text;
+      const retweetTextArray = currentText.split(' ');
+
+      if (retweetTextArray[0] === 'RT' && retweetTextArray[1][0] === '@') {
+        result.push(data[i]);
+      }
+    }
+
+    return result;
+  }
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/tweets/${id}`, {
       params: {
         startDate
       }
     }).then(resp => {
+      // console.log('this is tweet data raw: ', resp.data.data);
       setTweetData(resp.data.data);
     });
     axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/users/${id}/liked_tweets`).then(resp => {
+      // console.log('this is liked data raw ', resp.data.data);
       setLikedTweetsData(resp.data.data);
+    });
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get(`/retweets/${id}`, {
+      params: {
+        startDate
+      }
+    }).then(resp => {
+      setRetweetData(getRetweets(resp.data.data));
     });
   }, [id, startDate]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Sentiment__WEBPACK_IMPORTED_MODULE_2__.default, {
@@ -4943,7 +4969,8 @@ function App() {
     tweetData: tweetData
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Graph__WEBPACK_IMPORTED_MODULE_4__.default, {
     tweetData: tweetData,
-    likedTweetsData: likedTweetsData
+    likedTweetsData: likedTweetsData,
+    retweetData: retweetData
   }));
 }
 
@@ -4963,16 +4990,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.modern.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _LineGraph__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LineGraph */ "./client/src/Components/LineGraph.jsx");
 
 
 
 
 function Graph({
   tweetData,
-  likedTweetsData
+  likedTweetsData,
+  retweetData
 }) {
   const [currentTimeIndex, setCurrentTimeIndex] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('By Day');
   const [currentTimeRange, setCurrentTimeRange] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('7 days'); // data structure for Line[{x: xValue, y: yValue}]
@@ -5013,10 +5041,7 @@ function Graph({
     x: 0,
     y: 0
   }]);
-  const [likeDataSet, setLikedDataSet] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
-    x: 0,
-    y: 0
-  }]);
+  const [likeDataSet, setLikedDataSet] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [tweetDataSet, setTweetDataSet] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
     x: 0,
     y: 0
@@ -5072,13 +5097,12 @@ function Graph({
     setCurrentTimeRange(selectedTime);
   }
 
-  function getLikedData(timeHorizon, type) {
+  function getDataDay(timeHorizon, dataSet) {
     const dates = lastDays(timeHorizon);
     const dateTracker = {};
-    const result = [];
 
-    for (let i = 0; i < likedTweetsData.length; i += 1) {
-      const current = likedTweetsData[i];
+    for (let i = 0; i < dataSet.length; i += 1) {
+      const current = dataSet[i];
       const currentDate = formatDate(current.created_at);
 
       if (dateTracker[currentDate] === undefined) {
@@ -5088,14 +5112,29 @@ function Graph({
       }
     }
 
-    const dateTrackerKeys = Object.keys(dateTracker);
+    const dateKeys = Object.keys(dates);
+    const xAxis = [];
+    const yAxis = [];
 
-    for (let i = 0; i < dateTrackerKeys.length; i += 1) {
-      const currentKey = dateTrackerKeys[i];
+    for (let i = dateKeys.length - 1; i >= 0; i -= 1) {
+      const currentKey = dateKeys[i];
+      xAxis.push(currentKey);
+
+      if (dateTracker[currentKey] !== undefined) {
+        yAxis.push(dateTracker[currentKey]);
+      } else {
+        yAxis.push(0);
+      }
     }
+
+    return [xAxis, yAxis];
   }
 
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {}, [tweetData, likedTweetsData]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setLikedDataSet(getDataDay(7, likedTweetsData));
+    setTweetDataSet(getDataDay(7, tweetData));
+    setRetweetDataSet(getDataDay(7, retweetData));
+  }, [tweetData, likedTweetsData, retweetData]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "this is graph", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
     id: "timeIndex",
     onChange: onChangeIndex
@@ -5132,14 +5171,69 @@ function Graph({
     value: "4 months"
   }, "4 months"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
     value: "6 months"
-  }, "6 months")));
+  }, "6 months")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_LineGraph__WEBPACK_IMPORTED_MODULE_2__.default, {
+    likeData: likeDataSet,
+    tweetData: tweetDataSet,
+    retweetData: retweetDataSet
+  }));
 }
 
 Graph.propTypes = {
-  likedTweetsData: prop_types__WEBPACK_IMPORTED_MODULE_2___default().arrayOf((prop_types__WEBPACK_IMPORTED_MODULE_2___default().object)).isRequired,
-  tweetData: prop_types__WEBPACK_IMPORTED_MODULE_2___default().arrayOf((prop_types__WEBPACK_IMPORTED_MODULE_2___default().object)).isRequired
+  likedTweetsData: prop_types__WEBPACK_IMPORTED_MODULE_1___default().arrayOf((prop_types__WEBPACK_IMPORTED_MODULE_1___default().object)).isRequired,
+  tweetData: prop_types__WEBPACK_IMPORTED_MODULE_1___default().arrayOf((prop_types__WEBPACK_IMPORTED_MODULE_1___default().object)).isRequired
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Graph);
+
+/***/ }),
+
+/***/ "./client/src/Components/LineGraph.jsx":
+/*!*********************************************!*\
+  !*** ./client/src/Components/LineGraph.jsx ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.modern.js");
+
+
+
+function LineGraph({
+  likeData,
+  tweetData,
+  retweetData
+}) {
+  console.log("this is likeData: ", likeData);
+  console.log('this is tweetData: ', tweetData);
+  const data = {
+    labels: likeData[0],
+    datasets: [{
+      label: 'liked Tweets Data',
+      data: likeData[1],
+      fill: false,
+      borderColor: '31F21A'
+    }, {
+      label: 'Tweets Data',
+      data: tweetData[1],
+      fill: false,
+      borderColor: 'E7E72B'
+    }, {
+      label: 'Retweets Data',
+      data: retweetData[1],
+      fill: false,
+      borderColor: '001A7A'
+    }]
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_chartjs_2__WEBPACK_IMPORTED_MODULE_1__.Line, {
+    data: data
+  }));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LineGraph);
 
 /***/ }),
 

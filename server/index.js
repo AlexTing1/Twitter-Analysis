@@ -1,6 +1,6 @@
 const express = require('express');
 const axios = require('axios');
-const config = require("../config");
+const config = require('../config');
 
 const app = express();
 const PORT = 3000;
@@ -22,6 +22,7 @@ app.get('/tweets/:id', (req, res) => {
     params: {
       start_time: startDate,
       'tweet.fields': 'public_metrics,created_at',
+      exclude: 'retweets',
     },
   })
     .then((resp) => res.send(resp.data))
@@ -41,6 +42,22 @@ app.get('/users/:id/liked_tweets', (req, res) => {
 });
 
 // get retweets
+app.get('/retweets/:id', (req, res) => {
+  const { id } = req.params;
+  const { startDate } = req.query;
+
+  axios.get(`https://api.twitter.com/2/users/${id}/tweets?max_results=100`, {
+    headers: {
+      Authorization: `Bearer ${config.BEARER_TOKEN}`,
+    },
+    params: {
+      start_time: startDate,
+      'tweet.fields': 'public_metrics,created_at',
+    },
+  })
+    .then((resp) => res.send(resp.data))
+    .catch((error) => res.send(error));
+});
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);

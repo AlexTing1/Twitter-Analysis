@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Line } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
+import LineGraph from './LineGraph';
 
-function Graph({ tweetData, likedTweetsData }) {
+function Graph({ tweetData, likedTweetsData, retweetData }) {
   const [currentTimeIndex, setCurrentTimeIndex] = useState('By Day');
   const [currentTimeRange, setCurrentTimeRange] = useState('7 days');
 
@@ -19,7 +19,7 @@ function Graph({ tweetData, likedTweetsData }) {
   const [fourtMonths, setFourMonths] = useState([{ x: 0, y: 0 }]);
   const [sixMonths, setSixMonths] = useState([{ x: 0, y: 0 }]);
 
-  const [likeDataSet, setLikedDataSet] = useState([{ x: 0, y: 0 }]);
+  const [likeDataSet, setLikedDataSet] = useState([]);
   const [tweetDataSet, setTweetDataSet] = useState([{ x: 0, y: 0 }]);
   const [retweetDataSet, setRetweetDataSet] = useState([{ x: 0, y: 0 }]);
 
@@ -69,12 +69,12 @@ function Graph({ tweetData, likedTweetsData }) {
     setCurrentTimeRange(selectedTime);
   }
 
-  function getLikedData(timeHorizon, type) {
+  function getDataDay(timeHorizon, dataSet) {
     const dates = lastDays(timeHorizon);
     const dateTracker = {};
-    const result = [];
-    for (let i = 0; i < likedTweetsData.length; i += 1) {
-      const current = likedTweetsData[i];
+
+    for (let i = 0; i < dataSet.length; i += 1) {
+      const current = dataSet[i];
       const currentDate = formatDate(current.created_at);
       if (dateTracker[currentDate] === undefined) {
         dateTracker[currentDate] = 1;
@@ -83,17 +83,29 @@ function Graph({ tweetData, likedTweetsData }) {
       }
     }
 
-    const dateTrackerKeys = Object.keys(dateTracker);
+    const dateKeys = Object.keys(dates);
 
-    for (let i = 0; i < dateTrackerKeys.length; i += 1) {
-      const currentKey = dateTrackerKeys[i];
+    const xAxis = [];
+    const yAxis = [];
 
+    for (let i = dateKeys.length - 1; i >= 0; i -= 1) {
+      const currentKey = dateKeys[i];
+      xAxis.push(currentKey);
+      if (dateTracker[currentKey] !== undefined) {
+        yAxis.push(dateTracker[currentKey]);
+      } else {
+        yAxis.push(0);
+      }
     }
+
+    return [xAxis, yAxis];
   }
 
   useEffect(() => {
-
-  }, [tweetData, likedTweetsData]);
+    setLikedDataSet(getDataDay(7, likedTweetsData));
+    setTweetDataSet(getDataDay(7, tweetData));
+    setRetweetDataSet(getDataDay(7, retweetData));
+  }, [tweetData, likedTweetsData, retweetData]);
 
   return (
     <div>
@@ -126,6 +138,7 @@ function Graph({ tweetData, likedTweetsData }) {
           <option value="6 months">6 months</option>
         </select>
       )}
+      <LineGraph likeData={likeDataSet} tweetData={tweetDataSet} retweetData={retweetDataSet} />
     </div>
   );
 }
