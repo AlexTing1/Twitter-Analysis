@@ -87,7 +87,9 @@ function Graph({ tweetData, likedTweetsData }) {
 
     for (let i = 0; i < dateTrackerKeys.length; i += 1) {
       const currentKey = dateTrackerKeys[i];
+      if (type === 'day') {
 
+      }
     }
   }
 
