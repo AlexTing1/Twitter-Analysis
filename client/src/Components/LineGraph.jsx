@@ -1,6 +1,7 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
+import css from './css/lineGraph.css';
 
 function LineGraph({ likeData, tweetData, retweetData }) {
   const data = {
@@ -28,7 +29,7 @@ function LineGraph({ likeData, tweetData, retweetData }) {
   };
 
   return (
-    <div>
+    <div className={css.container}>
       <Line data={data} />
     </div>
   );
