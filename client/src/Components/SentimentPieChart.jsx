@@ -43,7 +43,7 @@ function SentimentPieChart({ data }) {
 
   return (
     <div className={css.container}>
-      <Doughnut data={pieData} responsive />
+      <Doughnut data={pieData} options={{ responsive: true, maintainAspectRatio: false }} />
     </div>
   );
 }

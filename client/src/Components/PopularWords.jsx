@@ -38,15 +38,15 @@ function PopularWords({ tweetData }) {
 
   const options = {
     enableTooltip: true,
-    fontSizes: [25, 100],
+    fontSizes: [20, 80],
   };
 
-  const size = [500, 500];
+  const size = [1000, 500];
 
   const wordCount = getWordCount();
   // console.log(wordCountDict);
   return (
-    <div>
+    <div className={css.container}>
       this is popular words
       <ReactWordCloud
         callbacks={callbacks}
