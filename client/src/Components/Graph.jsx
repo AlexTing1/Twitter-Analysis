@@ -37,12 +37,12 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
     const timeIndex = document.getElementById('timeIndex');
     const selectedText = timeIndex.options[timeIndex.selectedIndex].text.split(' ')[1];
     setCurrentTimeIndex(selectedText);
-    if (selectedText === 'By Month') {
-      setCurrentTimeRange('3 months');
-    } else if (selectedText === 'By Week') {
-      setCurrentTimeRange('7 weeks');
+    if (selectedText === 'Month') {
+      setCurrentTimeRange('3');
+    } else if (selectedText === 'Week') {
+      setCurrentTimeRange('7');
     } else {
-      setCurrentTimeRange('7 days');
+      setCurrentTimeRange('7');
     }
   }
 
@@ -88,22 +88,15 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
     const dates = {};
     const weekData = {};
     for (let i = 0; i <= timeHorizon; i += 1) {
-      //const d = new Date();
       const currentWeekDates = {};
-      //d.setDate(d.getDate() - i);
-
       for (let j = 0; j < 7; j += 1) {
         const d = new Date();
         currentWeekDates[(formatDate(d.setDate(d.getDate() - (j + (7 * i)))))] = 1;
       }
-      const currentXAxis = i + ' weeks';
+      const currentXAxis = `${i} weeks`;
       weekData[currentXAxis] = 0;
       dates[currentXAxis] = currentWeekDates;
     }
-
-    //console.log('this is dates: ', dates);
-
-
 
     for (let i = 0; i < dataSet.length; i += 1) {
       const current = dataSet[i];
@@ -111,24 +104,51 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
 
       const dateKeys = Object.keys(dates);
       for (let j = 0; j < dateKeys.length; j += 1) {
-        let currentKey = dateKeys[j];
+        const currentKey = dateKeys[j];
         if (dates[currentKey][currentDate] !== undefined) {
           weekData[currentKey] += 1;
         }
       }
-
     }
-
-    const yAxis = [];
-    const xAxis = [];
-
-    /* console.log(weekData);
-    console.log(Object.keys(weekData));
-    console.log(Object.values(weekData)); */
     return [Object.keys(weekData).reverse(), Object.values(weekData).reverse()];
   }
 
+  function formatDateMonth(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+
+    let month = (1 + date.getMonth()).toString();
+    month = month.length > 1 ? month : `0${month}`;
+
+    return `${month}/${year}`;
+  }
+
+  function getDataMonth(timeHorizon, dataSet) {
+    const monthData = {};
+    for (let i = 0; i < timeHorizon; i += 1) {
+      const d = new Date();
+      const date = formatDateMonth(d.setDate(d.getDate() - (32 * i)));
+      monthData[date] = 0;
+    }
+
+
+
+    for (let i = 0; i < dataSet.length; i += 1) {
+      const current = dataSet[i];
+      const currentMonthYear = formatDateMonth(current.created_at);
+
+      if (monthData[currentMonthYear] !== undefined) {
+        monthData[currentMonthYear] += 1;
+      }
+    }
+
+    console.log(monthData);
+
+    return [Object.keys(monthData).reverse(), Object.values(monthData).reverse()];
+  }
+
   useEffect(() => {
+    //getDataMonth(12, likedTweetsData);
     if (currentTimeIndex === 'Day') {
       setLikedDataSet(getDataDay(currentTimeRange, likedTweetsData));
       setTweetDataSet(getDataDay(currentTimeRange, tweetData));
@@ -137,6 +157,10 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
       setLikedDataSet(getDataWeek(currentTimeRange, likedTweetsData));
       setTweetDataSet(getDataWeek(currentTimeRange, tweetData));
       setRetweetDataSet(getDataWeek(currentTimeRange, retweetData));
+    } else {
+      setLikedDataSet(getDataMonth(currentTimeRange, likedTweetsData));
+      setTweetDataSet(getDataMonth(currentTimeRange, tweetData));
+      setRetweetDataSet(getDataMonth(currentTimeRange, retweetData));
     }
   }, [tweetData, likedTweetsData, retweetData, currentTimeRange, currentTimeIndex]);
 
