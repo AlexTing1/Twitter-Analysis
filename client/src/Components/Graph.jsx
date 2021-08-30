@@ -158,7 +158,6 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
 
   return (
     <div>
-      this is graph
       <select id="timeIndex" onChange={onChangeIndex}>
         <option value="By Day">By Day</option>
         <option value="By Week">By Week</option>

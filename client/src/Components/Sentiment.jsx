@@ -3,7 +3,7 @@ import Sent from 'sentiment';
 import PropTypes from 'prop-types';
 import SentimentPieChart from './SentimentPieChart';
 
-function Sentiment({ tweetData }) {
+function Sentiment({ tweetData, startDate, endDate }) {
   // const [tweetData, setTweetData] = useState([]);
   const [sentiment, setSentiment] = useState({
     positive: 0,
@@ -47,7 +47,7 @@ function Sentiment({ tweetData }) {
   return (
     <div>
       <span>this is sentiment</span>
-      {dataPercent !== 'NaN' && <SentimentPieChart data={sentiment} dataPercent={dataPercent} /> }
+      {dataPercent !== 'NaN' && <SentimentPieChart data={sentiment} dataPercent={dataPercent} startDate={startDate} endDate={endDate} /> }
     </div>
   );
 }

@@ -14,7 +14,7 @@ app.use(express.static(`${__dirname}/../client/dist`));
 app.get('/tweets/:id', (req, res) => {
   const { id } = req.params;
   const { startDate } = req.query;
-
+  console.log("this is startDate: ", startDate);
   axios.get(`https://api.twitter.com/2/users/${id}/tweets?max_results=100`, {
     headers: {
       Authorization: `Bearer ${config.BEARER_TOKEN}`,

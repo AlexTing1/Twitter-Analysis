@@ -1,33 +1,32 @@
 import React from 'react';
-import { Doughnut, Chart } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import css from './css/sentimentPieChart.css';
 
-function SentimentPieChart({ data, dataPercent }) {
-  /* const [pieData, setPieData] = useState([]);
-  useEffect(() => {
-    const tempPieData = [];
-    const keys = Object.keys(data);
-    keys.forEach((sentCount) => {
-      const current = {
-        title: sentCount,
-        value: data[sentCount],
-        color: '',
-      };
-      if (current.title === 'positive') {
-        current.color = '#42F300';
-      } else if (current.title === 'neutral') {
-        current.color = '#8F8F8F';
-      } else {
-        current.color = '#FFC900';
-      }
-      tempPieData.push(current);
-    });
+function SentimentPieChart({ data, dataPercent, startDate, endDate }) {
+  const options = {
+    plugins: {
+      legend: {
+        display: true,
+        position: 'bottom',
+      },
+      title: {
+        display: true,
+        text: `from ${startDate} - ${endDate}`,
+      },
+    },
+    layout: {
+      padding: 20,
+    },
 
-    setPieData(tempPieData);
-  }, [data]); */
-  // eslint-disable-next-line max-len
-  // console.log('this is data: ', ((data.positive + data.neutral) / (data.neutral + data.negative + data.positive)) * 100);
+    elements: {
+      arc: {
+        borderWidth: 0,
+      },
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+  };
 
   const plugins = [{
     beforeDraw(chart) {
@@ -56,8 +55,14 @@ function SentimentPieChart({ data, dataPercent }) {
       const recogTextY = height / 1.86;
       ctx.fillText(recogText, recogTextX, recogTextY);
       ctx.save();
+      ctx.globalCompositeOperation = 'destination-over';
+      ctx.fillStyle = 'lightGrey';
+      ctx.fillRect(0, 0, chart.width, chart.height);
+      ctx.restore();
     },
   }];
+
+
 
   const pieData = {
     labels: ['Positive', 'Neutral', 'Negative'],
@@ -67,13 +72,19 @@ function SentimentPieChart({ data, dataPercent }) {
       hoverBackgroundColor: ['#42F300', '#8F8F8F', '#FFC900'],
 
     }],
+
   };
   // console.log(pieData);
+
 
   return (
     <div className={css.container}>
       <span className={css.text}>testing</span>
-      <Doughnut data={pieData} options={{ responsive: true, maintainAspectRatio: false }} plugins={plugins} />
+      <Doughnut
+        data={pieData}
+        options={options}
+        plugins={plugins}
+      />
     </div>
   );
 }
@@ -84,6 +95,7 @@ SentimentPieChart.propTypes = {
     neutral: PropTypes.number.isRequired,
     negative: PropTypes.number.isRequired,
   }).isRequired,
+  dataPercent: PropTypes.number.isRequired,
 };
 
 export default SentimentPieChart;
