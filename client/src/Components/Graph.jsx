@@ -3,21 +3,8 @@ import PropTypes from 'prop-types';
 import LineGraph from './LineGraph';
 
 function Graph({ tweetData, likedTweetsData, retweetData }) {
-  const [currentTimeIndex, setCurrentTimeIndex] = useState('By Day');
+  const [currentTimeIndex, setCurrentTimeIndex] = useState('Day');
   const [currentTimeRange, setCurrentTimeRange] = useState('7');
-
-  // data structure for Line[{x: xValue, y: yValue}]
-  const [sevenDays, setSevenDays] = useState([{ x: 0, y: 0 }]);
-  const [fourteenDays, setFourteenDays] = useState([{ x: 0, y: 0 }]);
-  const [thirtyDays, setThirtyDays] = useState([{ x: 0, y: 0 }]);
-
-  const [sevenWeeks, setSevenWeeks] = useState([{ x: 0, y: 0 }]);
-  const [tenWeeks, setTenWeeks] = useState([{ x: 0, y: 0 }]);
-  const [twelveWeeks, setTweleveWeeks] = useState([{ x: 0, y: 0 }]);
-
-  const [threeMonths, setThreeMonths] = useState([{ x: 0, y: 0 }]);
-  const [fourtMonths, setFourMonths] = useState([{ x: 0, y: 0 }]);
-  const [sixMonths, setSixMonths] = useState([{ x: 0, y: 0 }]);
 
   const [likeDataSet, setLikedDataSet] = useState([]);
   const [tweetDataSet, setTweetDataSet] = useState([{ x: 0, y: 0 }]);
@@ -48,7 +35,7 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
 
   function onChangeIndex() {
     const timeIndex = document.getElementById('timeIndex');
-    const selectedText = timeIndex.options[timeIndex.selectedIndex].text;
+    const selectedText = timeIndex.options[timeIndex.selectedIndex].text.split(' ')[1];
     setCurrentTimeIndex(selectedText);
     if (selectedText === 'By Month') {
       setCurrentTimeRange('3 months');
@@ -97,11 +84,61 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
     return [xAxis, yAxis];
   }
 
+  function getDataWeek(timeHorizon, dataSet) {
+    const dates = {};
+    const weekData = {};
+    for (let i = 0; i <= timeHorizon; i += 1) {
+      //const d = new Date();
+      const currentWeekDates = {};
+      //d.setDate(d.getDate() - i);
+
+      for (let j = 0; j < 7; j += 1) {
+        const d = new Date();
+        currentWeekDates[(formatDate(d.setDate(d.getDate() - (j + (7 * i)))))] = 1;
+      }
+      const currentXAxis = i + ' weeks';
+      weekData[currentXAxis] = 0;
+      dates[currentXAxis] = currentWeekDates;
+    }
+
+    //console.log('this is dates: ', dates);
+
+
+
+    for (let i = 0; i < dataSet.length; i += 1) {
+      const current = dataSet[i];
+      const currentDate = formatDate(current.created_at);
+
+      const dateKeys = Object.keys(dates);
+      for (let j = 0; j < dateKeys.length; j += 1) {
+        let currentKey = dateKeys[j];
+        if (dates[currentKey][currentDate] !== undefined) {
+          weekData[currentKey] += 1;
+        }
+      }
+
+    }
+
+    const yAxis = [];
+    const xAxis = [];
+
+    /* console.log(weekData);
+    console.log(Object.keys(weekData));
+    console.log(Object.values(weekData)); */
+    return [Object.keys(weekData).reverse(), Object.values(weekData).reverse()];
+  }
+
   useEffect(() => {
-    setLikedDataSet(getDataDay(currentTimeRange, likedTweetsData));
-    setTweetDataSet(getDataDay(currentTimeRange, tweetData));
-    setRetweetDataSet(getDataDay(currentTimeRange, retweetData));
-  }, [tweetData, likedTweetsData, retweetData, currentTimeRange]);
+    if (currentTimeIndex === 'Day') {
+      setLikedDataSet(getDataDay(currentTimeRange, likedTweetsData));
+      setTweetDataSet(getDataDay(currentTimeRange, tweetData));
+      setRetweetDataSet(getDataDay(currentTimeRange, retweetData));
+    } else if (currentTimeIndex === 'Week') {
+      setLikedDataSet(getDataWeek(currentTimeRange, likedTweetsData));
+      setTweetDataSet(getDataWeek(currentTimeRange, tweetData));
+      setRetweetDataSet(getDataWeek(currentTimeRange, retweetData));
+    }
+  }, [tweetData, likedTweetsData, retweetData, currentTimeRange, currentTimeIndex]);
 
   return (
     <div>
@@ -112,7 +149,7 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
         <option value="By Month">By Month</option>
       </select>
 
-      {currentTimeIndex === 'By Day'
+      {currentTimeIndex === 'Day'
           && (
           <select id="timeHorizon" onChange={onChangeRange}>
             <option value="7 days">7 days</option>
@@ -120,14 +157,14 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
             <option value="30 days">30 days</option>
           </select>
           )}
-      {currentTimeIndex === 'By Week' && (
+      {currentTimeIndex === 'Week' && (
         <select id="timeHorizon" onChange={onChangeRange}>
           <option value="7 weeks">7 weeks</option>
           <option value="10 weeks">10 weeks</option>
           <option value="12 weeks">12 weeks</option>
         </select>
       )}
-      {currentTimeIndex === 'By Month' && (
+      {currentTimeIndex === 'Month' && (
         <select id="timeHorizon" onChange={onChangeRange}>
           <option value="3 months">3 months</option>
           <option value="4 months">4 months</option>
