@@ -27,7 +27,6 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
     const result = {};
     for (let i = 0; i < timeFrame; i += 1) {
       const d = new Date();
-      //d.setDate(d.getDate() - i);
       result[formatDate(d.setDate(d.getDate() - i))] = 1;
     }
     return result;
@@ -39,8 +38,6 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
     setCurrentTimeIndex(selectedText);
     if (selectedText === 'Month') {
       setCurrentTimeRange('3');
-    } else if (selectedText === 'Week') {
-      setCurrentTimeRange('7');
     } else {
       setCurrentTimeRange('7');
     }
@@ -131,8 +128,6 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
       monthData[date] = 0;
     }
 
-
-
     for (let i = 0; i < dataSet.length; i += 1) {
       const current = dataSet[i];
       const currentMonthYear = formatDateMonth(current.created_at);
@@ -142,13 +137,10 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
       }
     }
 
-    console.log(monthData);
-
     return [Object.keys(monthData).reverse(), Object.values(monthData).reverse()];
   }
 
   useEffect(() => {
-    //getDataMonth(12, likedTweetsData);
     if (currentTimeIndex === 'Day') {
       setLikedDataSet(getDataDay(currentTimeRange, likedTweetsData));
       setTweetDataSet(getDataDay(currentTimeRange, tweetData));
@@ -203,6 +195,7 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
 Graph.propTypes = {
   likedTweetsData: PropTypes.arrayOf(PropTypes.object).isRequired,
   tweetData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  retweetData: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default Graph;
