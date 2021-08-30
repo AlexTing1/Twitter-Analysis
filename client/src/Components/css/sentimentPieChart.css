@@ -1,5 +1,10 @@
 .container {
-  display: flex;
+  /* display: flex; */
   width: 500px;
   height: 1050px;
+}
+
+.text {
+  margin-left: 250px;
+  margin-top: 2000px;
 }

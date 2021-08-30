@@ -3,6 +3,7 @@ import axios from 'axios';
 import Sentiment from './Sentiment';
 import PopularWords from './PopularWords';
 import Graph from './Graph';
+import css from './css/app.css';
 
 function App() {
   const id = '1232319080637616128';
@@ -49,10 +50,15 @@ function App() {
   }, [id, startDate]);
 
   return (
-    <div>
-      <Sentiment tweetData={tweetData} />
-      <PopularWords tweetData={tweetData} />
-      <Graph tweetData={tweetData} likedTweetsData={likedTweetsData} retweetData={retweetData} />
+    <div className={css.container}>
+      <div className={css.floatChild}>
+        <Sentiment tweetData={tweetData} />
+      </div>
+      <div className={css.floatChild}>
+        <Graph tweetData={tweetData} likedTweetsData={likedTweetsData} retweetData={retweetData} />
+        <PopularWords tweetData={tweetData} />
+      </div>
+
     </div>
 
   );

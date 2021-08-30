@@ -11,6 +11,7 @@ function Sentiment({ tweetData }) {
     negative: 0,
   });
 
+  const [dataPercent, setDataPercent] = useState(0);
 
   function getSentiment(inputString) {
     const sent = new Sent();
@@ -35,6 +36,9 @@ function Sentiment({ tweetData }) {
         tempSentiment.neutral += 1;
       }
     });
+    const percent = (((tempSentiment.positive + tempSentiment.neutral)
+  / (tempSentiment.neutral + tempSentiment.negative + tempSentiment.positive)) * 100).toFixed(2);
+    setDataPercent(percent);
     setSentiment(tempSentiment);
   }, [tweetData]);
 
@@ -42,8 +46,8 @@ function Sentiment({ tweetData }) {
 
   return (
     <div>
-      this is sentiment
-      <SentimentPieChart data={sentiment} />
+      <span>this is sentiment</span>
+      {dataPercent !== 'NaN' && <SentimentPieChart data={sentiment} dataPercent={dataPercent} /> }
     </div>
   );
 }
