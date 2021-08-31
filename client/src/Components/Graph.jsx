@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import LineGraph from './LineGraph';
+import css from './css/graph.css';
 
 function Graph({ tweetData, likedTweetsData, retweetData }) {
   const [currentTimeIndex, setCurrentTimeIndex] = useState('Day');
@@ -158,6 +159,7 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
 
   return (
     <div>
+      <span className={css.text}>Twitter Account Activity</span>
       <select id="timeIndex" onChange={onChangeIndex}>
         <option value="By Day">By Day</option>
         <option value="By Week">By Week</option>
@@ -186,6 +188,7 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
           <option value="6 months">6 months</option>
         </select>
       )}
+
       <LineGraph likeData={likeDataSet} tweetData={tweetDataSet} retweetData={retweetDataSet} />
     </div>
   );
