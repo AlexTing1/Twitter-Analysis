@@ -14,8 +14,9 @@ function SentimentPieChart({
       },
       title: {
         display: true,
-        text: `from ${startDate} - ${endDate}`,
+        text: `From ${startDate} - ${endDate}`,
         position: 'top',
+        align: 'start',
         font: {
           size: 24,
         },

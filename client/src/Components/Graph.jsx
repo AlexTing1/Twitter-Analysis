@@ -160,34 +160,38 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
   return (
     <div>
       <span className={css.text}>Twitter Account Activity</span>
-      <select id="timeIndex" onChange={onChangeIndex}>
-        <option value="By Day">By Day</option>
-        <option value="By Week">By Week</option>
-        <option value="By Month">By Month</option>
-      </select>
 
       {currentTimeIndex === 'Day'
           && (
-          <select id="timeHorizon" onChange={onChangeRange}>
+          <select id="timeHorizon" onChange={onChangeRange} className={css.dropDown}>
             <option value="7 days">7 days</option>
             <option value="14 days">14 days</option>
             <option value="30 days">30 days</option>
           </select>
           )}
       {currentTimeIndex === 'Week' && (
-        <select id="timeHorizon" onChange={onChangeRange}>
+        <select id="timeHorizon" onChange={onChangeRange} className={css.dropDown}>
           <option value="7 weeks">7 weeks</option>
           <option value="10 weeks">10 weeks</option>
           <option value="12 weeks">12 weeks</option>
         </select>
       )}
       {currentTimeIndex === 'Month' && (
-        <select id="timeHorizon" onChange={onChangeRange}>
+        <select id="timeHorizon" onChange={onChangeRange} className={css.dropDown}>
           <option value="3 months">3 months</option>
           <option value="4 months">4 months</option>
           <option value="6 months">6 months</option>
         </select>
       )}
+
+      <select id="timeIndex" onChange={onChangeIndex} >
+        <option value="By Day">By Day</option>
+        <option value="By Week">By Week</option>
+        <option value="By Month">By Month</option>
+      </select>
+
+      <br />
+      <br />
 
       <LineGraph likeData={likeDataSet} tweetData={tweetDataSet} retweetData={retweetDataSet} />
     </div>

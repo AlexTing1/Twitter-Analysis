@@ -46,6 +46,8 @@ function Sentiment({ tweetData, startDate, endDate }) {
   return (
     <div>
       <span className={css.text}>Certik Sentiment analysis</span>
+      <br />
+      <br />
       {dataPercent !== 'NaN' && <SentimentPieChart data={sentiment} dataPercent={dataPercent} startDate={startDate} endDate={endDate} /> }
     </div>
   );
