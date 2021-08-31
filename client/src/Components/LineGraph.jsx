@@ -4,6 +4,26 @@ import PropTypes from 'prop-types';
 import css from './css/lineGraph.css';
 
 function LineGraph({ likeData, tweetData, retweetData }) {
+  const options = {
+    plugins: {
+      legend: {
+        display: true,
+        position: 'bottom',
+      },
+    },
+    layout: {
+      padding: 20,
+    },
+
+    elements: {
+      arc: {
+        borderWidth: 0,
+      },
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+  };
+
   const data = {
     labels: likeData[0],
     datasets: [
@@ -30,7 +50,7 @@ function LineGraph({ likeData, tweetData, retweetData }) {
 
   return (
     <div className={css.container}>
-      <Line data={data} />
+      <Line data={data} options={options} />
     </div>
   );
 }

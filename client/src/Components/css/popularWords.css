@@ -1,6 +1,17 @@
 .container {
   width: 1000px;
   height: 550px;
+  margin-top: 25px;
+}
+
+.text {
+  font-family: Helvetica,  sans-serif;
+  font-size: 24px;
+  font-style: 'bold';
+}
+
+.wordCloud {
+  background-color: lightgrey;
 }
 
 .tooltip {

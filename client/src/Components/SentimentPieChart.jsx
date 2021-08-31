@@ -3,7 +3,9 @@ import { Doughnut } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import css from './css/sentimentPieChart.css';
 
-function SentimentPieChart({ data, dataPercent, startDate, endDate }) {
+function SentimentPieChart({
+  data, dataPercent, startDate, endDate,
+}) {
   const options = {
     plugins: {
       legend: {
@@ -13,6 +15,10 @@ function SentimentPieChart({ data, dataPercent, startDate, endDate }) {
       title: {
         display: true,
         text: `from ${startDate} - ${endDate}`,
+        position: 'top',
+        font: {
+          size: 24,
+        },
       },
     },
     layout: {
@@ -62,8 +68,6 @@ function SentimentPieChart({ data, dataPercent, startDate, endDate }) {
     },
   }];
 
-
-
   const pieData = {
     labels: ['Positive', 'Neutral', 'Negative'],
     datasets: [{
@@ -76,10 +80,8 @@ function SentimentPieChart({ data, dataPercent, startDate, endDate }) {
   };
   // console.log(pieData);
 
-
   return (
     <div className={css.container}>
-      <span className={css.text}>testing</span>
       <Doughnut
         data={pieData}
         options={options}

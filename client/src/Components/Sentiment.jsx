@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Sent from 'sentiment';
 import PropTypes from 'prop-types';
 import SentimentPieChart from './SentimentPieChart';
+import css from './css/sentiment.css';
 
 function Sentiment({ tweetData, startDate, endDate }) {
   // const [tweetData, setTweetData] = useState([]);
@@ -42,11 +43,9 @@ function Sentiment({ tweetData, startDate, endDate }) {
     setSentiment(tempSentiment);
   }, [tweetData]);
 
-  console.log(sentiment);
-
   return (
     <div>
-      <span>this is sentiment</span>
+      <span className={css.text}>Certik Sentiment analysis</span>
       {dataPercent !== 'NaN' && <SentimentPieChart data={sentiment} dataPercent={dataPercent} startDate={startDate} endDate={endDate} /> }
     </div>
   );

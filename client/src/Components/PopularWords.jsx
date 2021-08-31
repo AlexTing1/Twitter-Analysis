@@ -47,13 +47,18 @@ function PopularWords({ tweetData }) {
   // console.log(wordCountDict);
   return (
     <div className={css.container}>
-      this is popular words
-      <ReactWordCloud
-        callbacks={callbacks}
-        size={size}
-        options={options}
-        words={wordCount}
-      />
+      <span className={css.text}>Social Key Words aggregated by Certik</span>
+      <br />
+      <br />
+      <div className={css.wordCloud}>
+        <ReactWordCloud
+          callbacks={callbacks}
+          size={size}
+          options={options}
+          words={wordCount}
+        />
+      </div>
+
     </div>
   );
 }
