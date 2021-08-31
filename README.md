@@ -1,5 +1,9 @@
 # Twitter-Analysis
 
+To use:
+1. run "npm run dev:react" to initialize webpack and babel.
+2. run "npm start" to start webbrowser in localhost:3000.
+
 The image below is the initilaization of the webpage. 
 ![image](https://user-images.githubusercontent.com/24627529/131576501-c7e503e7-882f-4c87-9dcf-deb9b281a34a.png)
 
