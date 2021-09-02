@@ -95,7 +95,16 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
         const d = new Date();
         currentWeekDates[(formatDate(d.setDate(d.getDate() - (j + (7 * i)))))] = 1;
       }
-      const currentXAxis = `${i} weeks`;
+
+      let currentXAxis;
+      if (i === 0) {
+        currentXAxis = 'This Week';
+      } else if (i === 1) {
+        currentXAxis = 'Last Week';
+      } else {
+        currentXAxis = `${i} weeks`;
+      }
+
       weekData[currentXAxis] = 0;
       dates[currentXAxis] = currentWeekDates;
     }
@@ -112,6 +121,8 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
         }
       }
     }
+    console.log("this is dates: ", dates);
+    console.log("this is weekData: ", weekData);
     return [Object.keys(weekData).reverse(), Object.values(weekData).reverse()];
   }
 
