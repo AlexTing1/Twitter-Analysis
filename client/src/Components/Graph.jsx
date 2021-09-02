@@ -65,13 +65,17 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
     }
 
     const dateKeys = Object.keys(dates);
-
-    const xAxis = [];
     const yAxis = [];
-
+    const xAxis = [];
     for (let i = dateKeys.length - 1; i >= 0; i -= 1) {
       const currentKey = dateKeys[i];
-      xAxis.push(currentKey);
+      if (i === 0) {
+        xAxis.push('Today');
+      } else if (i === 1) {
+        xAxis.push('Yesterday');
+      } else {
+        xAxis.push(`${i}d ago`);
+      }
       if (dateTracker[currentKey] !== undefined) {
         yAxis.push(dateTracker[currentKey]);
       } else {
