@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import css from './css/sentimentPieChart.css';
 
 function SentimentPieChart({
-  data, dataPercent, startDate, endDate,
+  data, dataPercent, startDate, endDate, posPercent, negPercent, neutPercent
 }) {
   const options = {
     plugins: {
@@ -68,9 +68,11 @@ function SentimentPieChart({
       ctx.restore();
     },
   }];
+  const positive = `Positive
+  ${posPercent}%`;
 
   const pieData = {
-    labels: ['Positive', 'Neutral', 'Negative'],
+    labels: [positive, `Neutral \n ${neutPercent}%`, `Negative \n ${negPercent}%`],
     datasets: [{
       data: [data.positive, data.neutral, data.negative],
       backgroundColor: ['#42F300', '#8F8F8F', '#FFC900'],
@@ -99,6 +101,8 @@ SentimentPieChart.propTypes = {
     negative: PropTypes.number.isRequired,
   }).isRequired,
   dataPercent: PropTypes.number.isRequired,
+  startDate: PropTypes.string.isRequired,
+  endDate: PropTypes.string.isRequired,
 };
 
 export default SentimentPieChart;

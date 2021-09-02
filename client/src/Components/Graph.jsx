@@ -121,8 +121,7 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
         }
       }
     }
-    console.log("this is dates: ", dates);
-    console.log("this is weekData: ", weekData);
+
     return [Object.keys(weekData).reverse(), Object.values(weekData).reverse()];
   }
 
@@ -138,6 +137,17 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
 
   function getDataMonth(timeHorizon, dataSet) {
     const monthData = {};
+    const xAxis = [];
+    for (let i = 0; i < timeHorizon; i += 1) {
+      if (i === 0) {
+        xAxis.push('This Month');
+      } else if (i === 1) {
+        xAxis.push('Last Month');
+      } else {
+        xAxis.push(`${i}m ago`);
+      }
+    }
+
     for (let i = 0; i < timeHorizon; i += 1) {
       const d = new Date();
       const date = formatDateMonth(d.setDate(d.getDate() - (32 * i)));
@@ -152,8 +162,7 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
         monthData[currentMonthYear] += 1;
       }
     }
-
-    return [Object.keys(monthData).reverse(), Object.values(monthData).reverse()];
+    return [xAxis.reverse(), Object.values(monthData).reverse()];
   }
 
   useEffect(() => {

@@ -11,7 +11,9 @@ function Sentiment({ tweetData, startDate, endDate }) {
     neutral: 0,
     negative: 0,
   });
-
+  const [posPercent, setPosPercent] = useState(0);
+  const [neutPercent, setNeutPercent] = useState(0);
+  const [negPercent, setNegPercent] = useState(0);
   const [dataPercent, setDataPercent] = useState(0);
 
   function getSentiment(inputString) {
@@ -39,7 +41,19 @@ function Sentiment({ tweetData, startDate, endDate }) {
     });
     const percent = (((tempSentiment.positive + tempSentiment.neutral)
   / (tempSentiment.neutral + tempSentiment.negative + tempSentiment.positive)) * 100).toFixed(2);
+
+    const pos = (((tempSentiment.positive)
+    / (tempSentiment.neutral + tempSentiment.negative + tempSentiment.positive)) * 100).toFixed(2);
+
+    const neg = (((tempSentiment.negative)
+    / (tempSentiment.neutral + tempSentiment.negative + tempSentiment.positive)) * 100).toFixed(2);
+
+    const neut = (((tempSentiment.neutral)
+    / (tempSentiment.neutral + tempSentiment.negative + tempSentiment.positive)) * 100).toFixed(2);
     setDataPercent(percent);
+    setPosPercent(pos);
+    setNegPercent(neg);
+    setNeutPercent(neut);
     setSentiment(tempSentiment);
   }, [tweetData]);
 
@@ -48,7 +62,7 @@ function Sentiment({ tweetData, startDate, endDate }) {
       <span className={css.text}>Certik Sentiment analysis</span>
       <br />
       <br />
-      {dataPercent !== 'NaN' && <SentimentPieChart data={sentiment} dataPercent={dataPercent} startDate={startDate} endDate={endDate} /> }
+      {dataPercent !== 'NaN' && <SentimentPieChart data={sentiment} dataPercent={dataPercent} posPercent={posPercent} neutPercent={neutPercent} negPercent={negPercent} startDate={startDate} endDate={endDate} /> }
     </div>
   );
 }
