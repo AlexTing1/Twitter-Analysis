@@ -1,6 +1,6 @@
 .container {
   width: 1000px;
-  height: 550px;
+  height: 200px;
   margin-top: 25px;
 }
 
@@ -11,7 +11,7 @@
 }
 
 .wordCloud {
-  background-color: lightgrey;
+  background-color: #fbfbfc;
 }
 
 .tooltip {

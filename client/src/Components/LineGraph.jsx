@@ -9,6 +9,7 @@ function LineGraph({ likeData, tweetData, retweetData }) {
       legend: {
         display: true,
         position: 'bottom',
+        pointStyle: 'circle',
       },
     },
     layout: {
@@ -19,7 +20,11 @@ function LineGraph({ likeData, tweetData, retweetData }) {
       arc: {
         borderWidth: 0,
       },
+      line: {
+        tension: 0,
+      },
     },
+    bezierCurve: true,
     responsive: true,
     maintainAspectRatio: false,
   };

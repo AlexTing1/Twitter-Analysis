@@ -19,7 +19,7 @@ function PopularWords({ tweetData }) {
         }
       });
     });
-    console.log(wordTracker);
+    //console.log(wordTracker);
 
     const wordTrackerKeys = Object.keys(wordTracker);
     wordTrackerKeys.forEach((key) => {
@@ -28,7 +28,7 @@ function PopularWords({ tweetData }) {
         result.push(current);
       }
     });
-    console.log(result);
+   // console.log(result);
     return result;
   }
 
@@ -41,7 +41,7 @@ function PopularWords({ tweetData }) {
     fontSizes: [20, 80],
   };
 
-  const size = [1000, 500];
+  const size = [1000, 400];
 
   const wordCount = getWordCount();
   // console.log(wordCountDict);

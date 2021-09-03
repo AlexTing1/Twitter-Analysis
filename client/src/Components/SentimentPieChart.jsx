@@ -63,7 +63,7 @@ function SentimentPieChart({
       ctx.fillText(recogText, recogTextX, recogTextY);
       ctx.save();
       ctx.globalCompositeOperation = 'destination-over';
-      ctx.fillStyle = 'lightGrey';
+      ctx.fillStyle = '#fbfbfc';
       ctx.fillRect(0, 0, chart.width, chart.height);
       ctx.restore();
     },
@@ -75,8 +75,8 @@ function SentimentPieChart({
     labels: [positive, `Neutral \n ${neutPercent}%`, `Negative \n ${negPercent}%`],
     datasets: [{
       data: [data.positive, data.neutral, data.negative],
-      backgroundColor: ['#42F300', '#8F8F8F', '#FFC900'],
-      hoverBackgroundColor: ['#42F300', '#8F8F8F', '#FFC900'],
+      backgroundColor: ['#40b884', '#486a79', '#FFC900'],
+      hoverBackgroundColor: ['#40b884', '#486a79', '#FFC900'],
 
     }],
 

@@ -4,6 +4,15 @@
   font-style: 'bold';
 }
 
-.dropDown {
+.dropDownIndex {
   margin-left: 570px;
+  background-color: #f2f3f4;
+}
+
+.dropDownIndex select{
+  outline: none;
+}
+
+.dropDownType {
+  background-color: #f2f3f4;
 }
