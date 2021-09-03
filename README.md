@@ -5,7 +5,7 @@ To use:
 2. run "npm start" to start webbrowser in localhost:3000.
 
 The image below is the initilaization of the webpage. 
-![image](https://user-images.githubusercontent.com/24627529/131576501-c7e503e7-882f-4c87-9dcf-deb9b281a34a.png)
+![image](https://user-images.githubusercontent.com/24627529/132072997-4a479bad-d457-492d-b53f-765d90f8d3b2.png)
 
 On the left we have a doughnut graph that states the dates of tweet data gathered at the top and the % of positive and neutral tweets in the middle. The colors are color coded to a legend right below. 
 
