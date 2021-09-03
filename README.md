@@ -11,25 +11,25 @@ On the left we have a doughnut graph that states the dates of tweet data gathere
 
 On the top right we have a line graph of the number of tweets, retweets, and likes send out by the Certik Twitter's account. The time range and time index of the line graph can be customized as shown below. 
 
-![image](https://user-images.githubusercontent.com/24627529/131576897-1f507853-4dd3-4e06-a125-2786f2c074ee.png)
+![image](https://user-images.githubusercontent.com/24627529/132073024-19f366e5-19e4-4529-b3c9-918ce5081444.png)
 
-![image](https://user-images.githubusercontent.com/24627529/131576938-d6911f56-3ee4-4f04-bf89-13cc1448a4fb.png)
+![image](https://user-images.githubusercontent.com/24627529/132073049-448d955c-7637-4786-9c1a-b1667cc9344c.png)
 
 Image below is an example of choosing "By weeks" in time frame of "7 weeks" and "By weeks" in time frame of "10 weeks." 
 
-![image](https://user-images.githubusercontent.com/24627529/131577048-2c7cdce4-c48f-44bb-95cc-1777dd8eaebe.png)
+![image](https://user-images.githubusercontent.com/24627529/132073089-1adf5cab-71d3-468a-bb1e-08d82d5f180b.png)
 
-![image](https://user-images.githubusercontent.com/24627529/131577098-e8acc3c3-70f0-4bd1-9ef0-9ecba3240f77.png)
+![image](https://user-images.githubusercontent.com/24627529/132073105-fa7a2e8d-7a2c-481c-b963-473acc505f83.png)
 
 Below are examples of "By Day" and "7 Days", "By Week" and "7 weeks', and  "By Month" and "3 Months."
 
-![image](https://user-images.githubusercontent.com/24627529/131577229-b0cd2ea3-caae-48fb-bf2e-f7a38c366721.png)
+![image](https://user-images.githubusercontent.com/24627529/132073124-51e1ca7b-0f4f-46bd-ad85-93dfab6ab93d.png)
 
-![image](https://user-images.githubusercontent.com/24627529/131577267-cbb6d21d-b156-4b3f-bb72-df296aa3495f.png)
+![image](https://user-images.githubusercontent.com/24627529/132073137-13e2c32f-943f-4002-b670-b8b46c03cd4f.png)
 
-![image](https://user-images.githubusercontent.com/24627529/131577287-8668179c-d310-4a95-9bb7-34ca6b93db18.png)
+![image](https://user-images.githubusercontent.com/24627529/132073151-acc3b162-bb5a-4f29-a22a-cdc9d4001a01.png)
 
 On the bottom right is a wordcloud of the most commonly used nonstop words for Certik's Twitter. On Hover, it will display the word and count of times it has been used.
 
-![image](https://user-images.githubusercontent.com/24627529/131577435-1933d3d7-1665-46ae-9fea-17317fff0982.png)
+![image](https://user-images.githubusercontent.com/24627529/132073171-46d6be1f-b5c0-4e3e-9289-34ddd0b80473.png)
 
