@@ -1,11 +1,29 @@
 .container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  /* grid-gap: 20px; */
+  display: flex;
+
 }
 
-/* .floatChild {
-  width: 50%;
+/* .pieGraph {
+  box-sizing: border-box;
+  width: 25%;
   float: left;
-  padding: 20px;
+  margin-right: 0;
+}
+
+.otherGraph {
+  box-sizing: border-box;
+  float: right;
+  width: 75%;
+  margin-left: 0;
 } */
+
+.pieGraph {
+  display: inline-block;
+  padding: 1em;
+
+}
+.otherGraph {
+  display: inline-block;
+  padding: 1em;
+
+}

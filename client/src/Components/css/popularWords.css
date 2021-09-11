@@ -12,6 +12,8 @@
 
 .wordCloud {
   background-color: #fbfbfc;
+  width: 832px;
+  height: 166px;
 }
 
 .tooltip {

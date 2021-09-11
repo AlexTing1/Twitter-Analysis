@@ -19,7 +19,6 @@ function PopularWords({ tweetData }) {
         }
       });
     });
-    //console.log(wordTracker);
 
     const wordTrackerKeys = Object.keys(wordTracker);
     wordTrackerKeys.forEach((key) => {
@@ -38,10 +37,12 @@ function PopularWords({ tweetData }) {
 
   const options = {
     enableTooltip: true,
-    fontSizes: [20, 80],
+    fontSizes: [5, 40],
+    rotations: 3,
+    rotationAngles: [0, 0],
   };
 
-  const size = [1000, 400];
+  const size = [700, 166];
 
   const wordCount = getWordCount();
   // console.log(wordCountDict);
@@ -53,7 +54,7 @@ function PopularWords({ tweetData }) {
       <div className={css.wordCloud}>
         <ReactWordCloud
           callbacks={callbacks}
-          size={size}
+          /* size={size} */
           options={options}
           words={wordCount}
         />

@@ -129,10 +129,10 @@ function App() {
 
   return (
     <div className={css.container}>
-      <div className={css.floatChild}>
+      <div className={css.pieGraph}>
         <Sentiment tweetData={doughnutTweetData} startDate={doughStartDate} endDate={endDate} />
       </div>
-      <div className={css.floatChild}>
+      <div className={css.otherGraph}>
         <Graph tweetData={tweetData} likedTweetsData={likedTweetsData} retweetData={retweetData} />
         <PopularWords tweetData={tweetData} />
       </div>
