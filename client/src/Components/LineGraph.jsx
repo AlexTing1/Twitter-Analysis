@@ -4,12 +4,16 @@ import PropTypes from 'prop-types';
 import css from './css/lineGraph.css';
 
 function LineGraph({ likeData, tweetData, retweetData }) {
+
   const options = {
     plugins: {
       legend: {
         display: true,
         position: 'bottom',
         pointStyle: 'circle',
+        labels: {
+          usePointStyle: true,
+        },
       },
     },
     layout: {

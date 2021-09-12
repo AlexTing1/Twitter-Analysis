@@ -7,14 +7,27 @@ function SentimentPieChart({
   data, dataPercent, startDate, endDate, posPercent, negPercent, neutPercent
 }) {
   const options = {
+    beforeInit(chart, options) {
+      chart.legend.afterFit = function() {
+        this.height += 300; // must use `function` and not => because of `this`
+      };
+    },
     plugins: {
       legend: {
         display: true,
         position: 'bottom',
+        fullSize: true,
+        maxHeight: 500,
         labels: {
-          boxWidth: 12,
+          boxWidth: 20,
+          boxHeight: 20,
+          padding: 10,
+          font: {
+            size: 12,
+          },
         },
       },
+      paddingBelowLegends: false,
       title: {
         display: true,
         text: `From ${startDate} - ${endDate}`,
@@ -26,9 +39,12 @@ function SentimentPieChart({
       },
     },
     layout: {
-      padding: 20,
+      padding: {
+        top: 20,
+        bottom: 30,
+      },
     },
-
+    cutout: 100,
     elements: {
       arc: {
         borderWidth: 0,
@@ -70,16 +86,23 @@ function SentimentPieChart({
       ctx.fillRect(0, 0, chart.width, chart.height);
       ctx.restore();
     },
+  },
+  {
+    beforeInit: function(chart, options) {
+      chart.legend.afterFit = function() {
+        this.height += 50; // must use `function` and not => because of `this`
+      };
+    }
   }];
   const positive = `Positive ${posPercent}%`;
 
   const pieData = {
-    labels: [positive, `Neutral ${neutPercent}%`, `Negative ${negPercent}%`],
+    labels: [['Positive', `${posPercent}%`], ['Neutral', `${neutPercent}%`], ['Negative', `${negPercent}%`]],
     datasets: [{
       data: [data.positive, data.neutral, data.negative],
       backgroundColor: ['#40b884', '#486a79', '#FFC900'],
       hoverBackgroundColor: ['#40b884', '#486a79', '#FFC900'],
-
+      borderWidth: 1,
     }],
 
   };
