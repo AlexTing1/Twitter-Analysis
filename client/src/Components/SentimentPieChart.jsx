@@ -16,12 +16,14 @@ function SentimentPieChart({
       legend: {
         display: true,
         position: 'bottom',
+        align: 'center',
         fullSize: true,
         maxHeight: 500,
+        maxWidth: 800,
         labels: {
-          boxWidth: 20,
-          boxHeight: 20,
-          padding: 10,
+          boxWidth: 15,
+          boxHeight: 15,
+          padding: 8,
           font: {
             size: 12,
           },
@@ -32,7 +34,7 @@ function SentimentPieChart({
         display: true,
         text: `From ${startDate} - ${endDate}`,
         position: 'top',
-        align: 'start',
+        align: 'center',
         font: {
           size: 18,
         },
