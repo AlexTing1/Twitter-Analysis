@@ -11,6 +11,9 @@ function SentimentPieChart({
       legend: {
         display: true,
         position: 'bottom',
+        labels: {
+          boxWidth: 12,
+        },
       },
       title: {
         display: true,
@@ -18,7 +21,7 @@ function SentimentPieChart({
         position: 'top',
         align: 'start',
         font: {
-          size: 24,
+          size: 18,
         },
       },
     },
@@ -41,25 +44,25 @@ function SentimentPieChart({
       const { height } = chart;
       const { ctx } = chart;
       ctx.restore();
-      let fontSize = (height / 300).toFixed(2);
-      ctx.font = `${fontSize}em sans-serif`;
+      let fontSize = (height / 240).toFixed(2);
+      ctx.font = `bold ${fontSize}em sans-serif`;
       ctx.textBaseline = 'top';
       const percentText = `${dataPercent}%`;
       const percentTextX = Math.round((width - ctx.measureText(percentText).width) / 2);
-      const percentTextY = height / 2.2;
+      const percentTextY = height / 2.4;
       ctx.fillText(percentText, percentTextX, percentTextY);
 
-      fontSize = (height / 900).toFixed(2);
+      fontSize = (height / 600).toFixed(2);
       ctx.font = `${fontSize}em sans-serif`;
       ctx.textBaseline = 'top';
       const nonNegText = 'Non-negative';
       const nonNegTextX = Math.round((width - ctx.measureText(nonNegText).width) / 2);
-      const nonNegTextY = height / 1.95;
+      const nonNegTextY = height / 2.0;
       ctx.fillText(nonNegText, nonNegTextX, nonNegTextY);
 
       const recogText = 'Recognition';
       const recogTextX = Math.round((width - ctx.measureText(recogText).width) / 2);
-      const recogTextY = height / 1.86;
+      const recogTextY = height / 1.85;
       ctx.fillText(recogText, recogTextX, recogTextY);
       ctx.save();
       ctx.globalCompositeOperation = 'destination-over';
@@ -68,11 +71,10 @@ function SentimentPieChart({
       ctx.restore();
     },
   }];
-  const positive = `Positive
-  ${posPercent}%`;
+  const positive = `Positive ${posPercent}%`;
 
   const pieData = {
-    labels: [positive, `Neutral \n ${neutPercent}%`, `Negative \n ${negPercent}%`],
+    labels: [positive, `Neutral ${neutPercent}%`, `Negative ${negPercent}%`],
     datasets: [{
       data: [data.positive, data.neutral, data.negative],
       backgroundColor: ['#40b884', '#486a79', '#FFC900'],
