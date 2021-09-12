@@ -31,4 +31,4 @@ Below are examples of "By Day" and "7 Days", "By Week" and "7 weeks', and  "By M
 
 On the bottom right is a wordcloud of the most commonly used nonstop words for Certik's Twitter. On Hover, it will display the word and count of times it has been used.
 
-![image](https://user-images.githubusercontent.com/24627529/133005155-e0f55c82-60f5-4442-b939-c105dfbe7e0f.png)
+![image](https://user-images.githubusercontent.com/24627529/133005174-8685f87a-0441-43f0-b2ac-1587a0bff2d5.png)
