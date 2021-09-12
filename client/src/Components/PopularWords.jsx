@@ -42,7 +42,7 @@ function PopularWords({ tweetData }) {
     rotationAngles: [0, 0],
   };
 
-  const size = [700, 166];
+  const size = [1000, 166];
 
   const wordCount = getWordCount();
   // console.log(wordCountDict);
