@@ -41,7 +41,7 @@ function PopularWords({ tweetData }) {
   };
 
   const wordCount = getWordCount();
-  // console.log(wordCountDict);
+
   return (
     <div className={css.container}>
       <span className={css.text}>Social Key Words aggregated by Certik</span>
