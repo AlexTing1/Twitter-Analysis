@@ -3,6 +3,20 @@ import { Doughnut } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import css from './css/sentimentPieChart.css';
 
+//  SentimentPieChart takes in date, dataPercent, startDate, endDate, posPercent, negPercent,
+//  and neutPercent to create a Doughnut graph that represents the % of positive, negative,
+//  and neutral tweets from a twitter account between the startDate and endDate.
+//  data is an object that contains the information breakdown of the number of positive, negative,
+//  and neutral tweets. dataPercent is the % of tweets that are Non-negative. startDate and endDate
+//  is used for the title of this doughnut graph and is used to let the user know the start and end
+//  date for the Sentiment Analysis. posPercent, negPercent, and neutPercent are the percentage of
+//  tweets that are positive, negative, and neutral respectively between the startDate and endDate.
+
+//  SentimentPieChart uses the react-chartjs-2 package to create a doughnut graph. The package
+//  allows the integration of Chart.js packages within React. More information about Chart.js
+//  can be found here: https://www.chartjs.org/
+
+//  ./css/sentimentPieChart.css contains the css used for this function.
 function SentimentPieChart({
   data, dataPercent, startDate, endDate, posPercent, negPercent, neutPercent,
 }) {
