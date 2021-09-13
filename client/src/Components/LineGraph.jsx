@@ -3,6 +3,12 @@ import { Line } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import css from './css/lineGraph.css';
 
+//  LineGraph takes in likeData, tweetData, and retweetData and graphs them on a line graph
+//  using react-chartjs-2.
+
+//  css for this file can be found in ./css/lineGraph.css.
+
+//  More information about react-chartjs-2 can be found here: https://www.npmjs.com/package/react-chartjs-2
 function LineGraph({ likeData, tweetData, retweetData }) {
   const options = {
     plugins: {

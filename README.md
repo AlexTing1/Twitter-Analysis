@@ -1,8 +1,9 @@
 # Twitter-Analysis
 
 To use:
-1. run "npm run dev:react" to initialize webpack and babel.
-2. run "npm start" to start web browser in localhost:3000.
+1. install npm packages.
+2. run "npm run dev:react" to initialize webpack and babel.
+3. run "npm start" to start web browser in localhost:3000.
 
 The image below is the initilaization of the webpage.
 ![image](https://user-images.githubusercontent.com/24627529/133004959-23215a3a-2c9b-4fb7-8e93-703c30671491.png)

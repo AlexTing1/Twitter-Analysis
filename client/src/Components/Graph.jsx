@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 import LineGraph from './LineGraph';
 import css from './css/graph.css';
 
+//  Graph function takes in tweetData, likedTweetsData, and retweetData of a user and then
+//  calculates the data that will be used by LineGraph.jsx to create the line graph of the data.
+//  Graph function also contains the ability to allow the user to toggle the preferred data range
+//  and index of the analysis. The input data used to calculate the line graph data can be changed
+//  based on a user's preferrence. In future updates, I plan on making the proces of converting raw
+//  data to the requested input data more efficient.
+
+//  css for this file can be found in ./css/graph.css
 function Graph({ tweetData, likedTweetsData, retweetData }) {
   const [currentTimeIndex, setCurrentTimeIndex] = useState('Day');
   const [currentTimeRange, setCurrentTimeRange] = useState('7');
@@ -11,6 +19,7 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
   const [tweetDataSet, setTweetDataSet] = useState([{ x: 0, y: 0 }]);
   const [retweetDataSet, setRetweetDataSet] = useState([{ x: 0, y: 0 }]);
 
+  //  returns dateString into date format of month/day/year
   function formatDate(dateString) {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -24,6 +33,7 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
     return `${month}/${day}/${year}`;
   }
 
+  //  retuns last timeFrame dates in an object with format {date: 1}.
   function lastDays(timeFrame) {
     const result = {};
     for (let i = 0; i < timeFrame; i += 1) {
@@ -33,23 +43,7 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
     return result;
   }
 
-  function onChangeIndex() {
-    const timeIndex = document.getElementById('timeIndex');
-    const selectedText = timeIndex.options[timeIndex.selectedIndex].text.split(' ')[1];
-    setCurrentTimeIndex(selectedText);
-    if (selectedText === 'Month') {
-      setCurrentTimeRange('3');
-    } else {
-      setCurrentTimeRange('7');
-    }
-  }
-
-  function onChangeRange() {
-    const timeHorizon = document.getElementById('timeHorizon');
-    const selectedTime = timeHorizon.options[timeHorizon.selectedIndex].text.split(' ')[0];
-    setCurrentTimeRange(parseInt(selectedTime, 10));
-  }
-
+  //  returns the data of dataSet within timeHorizon for days data.
   function getDataDay(timeHorizon, dataSet) {
     const dates = lastDays(timeHorizon);
     const dateTracker = {};
@@ -86,6 +80,7 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
     return [xAxis, yAxis];
   }
 
+  //  returns the data of dataSet within timeHorizon for weeks data.
   function getDataWeek(timeHorizon, dataSet) {
     const dates = {};
     const weekData = {};
@@ -125,6 +120,7 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
     return [Object.keys(weekData).reverse(), Object.values(weekData).reverse()];
   }
 
+  //  takes dateString and format in months/year
   function formatDateMonth(dateString) {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -135,6 +131,7 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
     return `${month}/${year}`;
   }
 
+  //  returns the data of dataSet within timeHorizon for months data.
   function getDataMonth(timeHorizon, dataSet) {
     const monthData = {};
     const xAxis = [];
@@ -163,6 +160,25 @@ function Graph({ tweetData, likedTweetsData, retweetData }) {
       }
     }
     return [xAxis.reverse(), Object.values(monthData).reverse()];
+  }
+
+  //  gets selected index of user (Month, weeks, or days).
+  function onChangeIndex() {
+    const timeIndex = document.getElementById('timeIndex');
+    const selectedText = timeIndex.options[timeIndex.selectedIndex].text.split(' ')[1];
+    setCurrentTimeIndex(selectedText);
+    if (selectedText === 'Month') {
+      setCurrentTimeRange('3');
+    } else {
+      setCurrentTimeRange('7');
+    }
+  }
+
+  //  gets selected time range of user.
+  function onChangeRange() {
+    const timeHorizon = document.getElementById('timeHorizon');
+    const selectedTime = timeHorizon.options[timeHorizon.selectedIndex].text.split(' ')[0];
+    setCurrentTimeRange(parseInt(selectedTime, 10));
   }
 
   useEffect(() => {
