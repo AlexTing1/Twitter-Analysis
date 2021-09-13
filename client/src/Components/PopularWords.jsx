@@ -3,14 +3,13 @@ import stopword from 'stopword';
 import ReactWordCloud from 'react-wordcloud';
 import PropTypes from 'prop-types';
 import css from './css/popularWords.css';
-//  react-wordcloud
+
 function PopularWords({ tweetData }) {
   function getWordCount() {
     const wordTracker = {};
     const result = [];
     tweetData.forEach((tweet) => {
       const currentText = stopword.removeStopwords(tweet.text.split(' '));
-      // console.log(currentText);
       currentText.forEach((word) => {
         if (wordTracker[word] === undefined) {
           wordTracker[word] = 1;
@@ -27,7 +26,6 @@ function PopularWords({ tweetData }) {
         result.push(current);
       }
     });
-   // console.log(result);
     return result;
   }
 
@@ -41,8 +39,6 @@ function PopularWords({ tweetData }) {
     rotations: 3,
     rotationAngles: [0, 0],
   };
-
-  const size = [1000, 166];
 
   const wordCount = getWordCount();
   // console.log(wordCountDict);

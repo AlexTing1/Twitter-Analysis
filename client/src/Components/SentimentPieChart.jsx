@@ -4,14 +4,9 @@ import PropTypes from 'prop-types';
 import css from './css/sentimentPieChart.css';
 
 function SentimentPieChart({
-  data, dataPercent, startDate, endDate, posPercent, negPercent, neutPercent
+  data, dataPercent, startDate, endDate, posPercent, negPercent, neutPercent,
 }) {
   const options = {
-    beforeInit(chart, options) {
-      chart.legend.afterFit = function() {
-        this.height += 300; // must use `function` and not => because of `this`
-      };
-    },
     plugins: {
       legend: {
         display: true,
@@ -89,14 +84,7 @@ function SentimentPieChart({
       ctx.restore();
     },
   },
-  {
-    beforeInit: function(chart, options) {
-      chart.legend.afterFit = function() {
-        this.height += 50; // must use `function` and not => because of `this`
-      };
-    }
-  }];
-  const positive = `Positive ${posPercent}%`;
+  ];
 
   const pieData = {
     labels: [['Positive', `${posPercent}%`], ['Neutral', `${neutPercent}%`], ['Negative', `${negPercent}%`]],
@@ -108,7 +96,6 @@ function SentimentPieChart({
     }],
 
   };
-  // console.log(pieData);
 
   return (
     <div className={css.container}>
@@ -130,6 +117,9 @@ SentimentPieChart.propTypes = {
   dataPercent: PropTypes.number.isRequired,
   startDate: PropTypes.string.isRequired,
   endDate: PropTypes.string.isRequired,
+  posPercent: PropTypes.number.isRequired,
+  negPercent: PropTypes.number.isRequired,
+  neutPercent: PropTypes.number.isRequired,
 };
 
 export default SentimentPieChart;

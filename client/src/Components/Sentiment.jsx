@@ -69,6 +69,8 @@ function Sentiment({ tweetData, startDate, endDate }) {
 
 Sentiment.propTypes = {
   tweetData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  startDate: PropTypes.string.isRequired,
+  endDate: PropTypes.string.isRequired,
 };
 
 export default Sentiment;
