@@ -4,7 +4,22 @@ import ReactWordCloud from 'react-wordcloud';
 import PropTypes from 'prop-types';
 import css from './css/popularWords.css';
 
+//  PopularWords takes in the tweetData which is a users Twitter data of historical tweets,
+//  and then will use this data to calculate the most popular non-stop words for the Twitter
+//  user and display that information using a wordcloud.
+
+//  PopularWords uses npm package react-wordcloud to create the wordcloud, and npm package
+//  stopword to filter out the stopwords in its calculations.
+
+//  css for this file can be found in ./css/popularWords.css
+
+//  More information about stopword: https://www.npmjs.com/package/stopword
+//  More information about React-wordcloud: https://www.npmjs.com/package/react-wordcloud
 function PopularWords({ tweetData }) {
+  //  getWordCount parses through tweetData, filters out stopwords and then returns
+  //  an array of objects with the keys being text used and number of times text has been
+  //  observed in tweetData. In other words, the format is [{text: word, value: count of word}].
+  //  This format is the data format used for react-wordCloud.
   function getWordCount() {
     const wordTracker = {};
     const result = [];
@@ -50,7 +65,6 @@ function PopularWords({ tweetData }) {
       <div className={css.wordCloud}>
         <ReactWordCloud
           callbacks={callbacks}
-          /* size={size} */
           options={options}
           words={wordCount}
         />
