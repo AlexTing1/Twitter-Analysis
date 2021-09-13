@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(`${__dirname}/../client/dist`));
 
-// get tweets
+// get tweets of twitter user :id
 app.get('/tweets/:id', (req, res) => {
   const { id } = req.params;
   const { startDate } = req.query;
@@ -28,7 +28,7 @@ app.get('/tweets/:id', (req, res) => {
     .catch((error) => res.send(error));
 });
 
-// get likes
+// get likes of twitter user :id
 app.get('/users/:id/liked_tweets', (req, res) => {
   const { id } = req.params;
   axios.get(`https://api.twitter.com/2/users/${id}/liked_tweets?tweet.fields=created_at&max_results=100`, {
@@ -40,7 +40,7 @@ app.get('/users/:id/liked_tweets', (req, res) => {
     .catch((error) => res.send(error));
 });
 
-// get retweets
+// get retweets of twitter user :id
 app.get('/retweets/:id', (req, res) => {
   const { id } = req.params;
   const { startDate } = req.query;
