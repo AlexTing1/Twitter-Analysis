@@ -11,6 +11,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/../client/dist`));
 
 // get tweets of twitter user :id
+app.get('/user/:username', (req, res) => {
+  const { username } = req.params;
+  axios.get(`https://api.twitter.com/2/users/by?usernames=${username}`, {
+    headers: {
+      Authorization: `Bearer ${config.BEARER_TOKEN}`,
+    },
+  })
+    .then((resp) => res.send(resp.data))
+    .catch((error) => res.send(error));
+});
+
 app.get('/tweets/:id', (req, res) => {
   const { id } = req.params;
   const { startDate } = req.query;
