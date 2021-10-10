@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TwitterAnalysis from './Components/TwitterAnalysis';
-import Start from './Components/Start';
+import App from './Components/App';
 
-ReactDOM.render(<Start />, document.getElementById('Twitter-Analysis'));
+ReactDOM.render(<App />, document.getElementById('Twitter-Analysis'));

@@ -1,29 +1,36 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import {
+  BrowserRouter as Router, Switch, Route, Link,
+} from 'react-router-dom';
 import Start from './Start';
+import TwitterAnalysis from './TwitterAnalysis';
 
 function App() {
+  const [id, setId] = useState('1232319080637616128');
+
   function demoOnClick() {
     console.log('test');
   }
 
   return (
-    <div>
 
-      <Router>
-        <div>
-          <Switch>
-            <Route path="/" exact component={Start} />
-            {/* <Route path="/twitteranalysis" */}
-          </Switch>
-        </div>
-      </Router>
+    <Router>
       <div>
-        <div>
-          <button type="button" onClick={demoOnClick}> Demo </button>
-        </div>
+        <Switch>
+          <Route
+            path="/"
+            exact
+            render={() => <Start setId={setId} />}
+          />
+          <Route
+            path="/twitteranalysis"
+            render={() => <TwitterAnalysis id={id} />}
+          />
+        </Switch>
       </div>
-    </div>
+
+    </Router>
+
   );
 }
 
