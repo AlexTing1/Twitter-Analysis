@@ -79,7 +79,7 @@ function Sentiment({ tweetData, startDate, endDate }) {
 
   return (
     <div>
-      <span className={css.text}>Certik Sentiment analysis</span>
+      <span className={css.text}>Sentiment analysis</span>
       <br />
       <br />
       {dataPercent !== 'NaN' && <SentimentPieChart data={sentiment} dataPercent={dataPercent} posPercent={posPercent} neutPercent={neutPercent} negPercent={negPercent} startDate={startDate} endDate={endDate} /> }

@@ -8,7 +8,7 @@ import css from './css/app.css';
 //  Main function of the program. App retrieves all the necessary twitter data in the correct format
 //  from Twitter API and sends that information to the right files. Data is collected using Twitter
 //  API. Function calls are creatd under server/index.js.
-function App() {
+function TwitterAnalysis() {
   const id = '1232319080637616128'; //  This is Certik's twitter id
   const startDate = '2021-01-01T00:00:00Z'; //  This is the date where I start collection data.
   const [tweetData, setTweetData] = useState([]);
@@ -98,4 +98,4 @@ function App() {
   );
 }
 
-export default App;
+export default TwitterAnalysis;
