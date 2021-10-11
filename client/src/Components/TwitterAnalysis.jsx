@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Sentiment from './Sentiment';
 import PopularWords from './PopularWords';
@@ -9,8 +10,6 @@ import css from './css/app.css';
 //  from Twitter API and sends that information to the right files. Data is collected using Twitter
 //  API. Function calls are creatd under server/index.js.
 function TwitterAnalysis({ id }) {
-  console.log(id);
-  //const id = '1232319080637616128'; //  This is Certik's twitter id
   const startDate = '2021-01-01T00:00:00Z'; //  This is the date where I start collection data.
   const [tweetData, setTweetData] = useState([]);
   const [likedTweetsData, setLikedTweetsData] = useState([]);
@@ -80,6 +79,7 @@ function TwitterAnalysis({ id }) {
       },
     })
       .then((resp) => {
+        console.log(resp.data.data);
         setDoughnutTweetData(resp.data.data);
       });
   }, [id, startDate]);
@@ -87,13 +87,15 @@ function TwitterAnalysis({ id }) {
   return (
     <div className={css.container}>
       <div className={css.pieGraph}>
-        <Sentiment tweetData={doughnutTweetData} startDate={sentimentStartDate} endDate={endDate} />
+        <Sentiment tweetData={doughnutTweetData} />
       </div>
       <div className={css.otherGraph}>
         <Graph tweetData={tweetData} likedTweetsData={likedTweetsData} retweetData={retweetData} />
         <PopularWords tweetData={tweetData} />
       </div>
-
+      <Link to="/">
+        <button type="button">Back</button>
+      </Link>
     </div>
 
   );

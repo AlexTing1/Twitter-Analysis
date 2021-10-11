@@ -31,7 +31,7 @@ app.get('/tweets/:id', (req, res) => {
       Authorization: `Bearer ${config.BEARER_TOKEN}`,
     },
     params: {
-      start_time: startDate,
+      //start_time: startDate,
       'tweet.fields': 'public_metrics,created_at',
       exclude: 'retweets',
     },
@@ -62,7 +62,7 @@ app.get('/retweets/:id', (req, res) => {
       Authorization: `Bearer ${config.BEARER_TOKEN}`,
     },
     params: {
-      start_time: startDate,
+      //start_time: startDate,
       'tweet.fields': 'public_metrics,created_at',
     },
   })

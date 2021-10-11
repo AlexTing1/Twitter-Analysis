@@ -4,6 +4,7 @@ import {
 } from 'react-router-dom';
 import Start from './Start';
 import TwitterAnalysis from './TwitterAnalysis';
+import css from './css/app.css';
 
 function App() {
   const [id, setId] = useState('1232319080637616128');
@@ -15,7 +16,7 @@ function App() {
   return (
 
     <Router>
-      <div>
+      <div classsName={css.root}>
         <Switch>
           <Route
             path="/"

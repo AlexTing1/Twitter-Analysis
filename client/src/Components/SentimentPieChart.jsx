@@ -18,7 +18,7 @@ import css from './css/sentimentPieChart.css';
 
 //  ./css/sentimentPieChart.css contains the css used for this function.
 function SentimentPieChart({
-  data, dataPercent, startDate, endDate, posPercent, negPercent, neutPercent,
+  data, dataPercent, posPercent, negPercent, neutPercent,
 }) {
   const options = {
     plugins: {
@@ -41,7 +41,7 @@ function SentimentPieChart({
       paddingBelowLegends: false,
       title: {
         display: true,
-        text: `From ${startDate} - ${endDate}`,
+        text: 'Last 100 Tweets',
         position: 'top',
         align: 'center',
         font: {
@@ -129,8 +129,6 @@ SentimentPieChart.propTypes = {
     negative: PropTypes.number.isRequired,
   }).isRequired,
   dataPercent: PropTypes.number.isRequired,
-  startDate: PropTypes.string.isRequired,
-  endDate: PropTypes.string.isRequired,
   posPercent: PropTypes.number.isRequired,
   negPercent: PropTypes.number.isRequired,
   neutPercent: PropTypes.number.isRequired,

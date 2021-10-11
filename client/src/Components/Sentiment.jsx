@@ -21,7 +21,7 @@ import css from './css/sentiment.css';
 
 //  Sentiment uses the sentiment npm package in order to analyze the sentiment value of a tweet.
 //  More info about the sentiment package can be found here: https://www.npmjs.com/package/sentiment
-function Sentiment({ tweetData, startDate, endDate }) {
+function Sentiment({ tweetData }) {
   const [sentiment, setSentiment] = useState({
     positive: 0,
     neutral: 0,
@@ -82,15 +82,13 @@ function Sentiment({ tweetData, startDate, endDate }) {
       <span className={css.text}>Sentiment analysis</span>
       <br />
       <br />
-      {dataPercent !== 'NaN' && <SentimentPieChart data={sentiment} dataPercent={dataPercent} posPercent={posPercent} neutPercent={neutPercent} negPercent={negPercent} startDate={startDate} endDate={endDate} /> }
+      {dataPercent !== 'NaN' && <SentimentPieChart data={sentiment} dataPercent={dataPercent} posPercent={posPercent} neutPercent={neutPercent} negPercent={negPercent} /> }
     </div>
   );
 }
 
 Sentiment.propTypes = {
   tweetData: PropTypes.arrayOf(PropTypes.object).isRequired,
-  startDate: PropTypes.string.isRequired,
-  endDate: PropTypes.string.isRequired,
 };
 
 export default Sentiment;

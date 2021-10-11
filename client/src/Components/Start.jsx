@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import css from './css/start.css';
 
 function Start({ setId }) {
   //const [id, setId] = useState('1232319080637616128');
@@ -21,13 +22,13 @@ function Start({ setId }) {
   }
 
   return (
-    <div>
+    <div className={css.container}>
       <div>
         <input type="text" onChange={onChange} />
-        <button type="submit" onClick={setUserName}>Submit</button>
+        <button type="submit" onClick={setUserName} className={css.setButton}>Set Username</button>
       </div>
       <Link to="/twitteranalysis">
-        <button type="button">Demo</button>
+        <button type="button" className={css.startButton}>Start</button>
       </Link>
     </div>
   );
