@@ -22,7 +22,11 @@ function Start({ setId }) {
   }
 
   return (
+
     <div className={css.container}>
+      <div className={css.title}>
+        <h1 className={css.titleText}>Welcome to Twitter Sentiment Analysis</h1>
+      </div>
       <div>
         <input type="text" onChange={onChange} />
         <button type="submit" onClick={setUserName} className={css.setButton}>Set Username</button>

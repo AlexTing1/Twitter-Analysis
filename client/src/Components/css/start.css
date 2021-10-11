@@ -17,6 +17,25 @@
   margin-top: 10px;
 }
  */
+
+.title {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  -webkit-transform: translate(-35%, -50%);
+    transform: translate(-35%, -50%);
+
+}
+
+.titleText {
+
+  font-size: 64px;
+  font-style: italic;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+  text-shadow: 2px 2px 20px grey;
+  width:1500px;
+}
+
 .setButton {
   display:inline-block;
   padding:0.23em 0.8em;
