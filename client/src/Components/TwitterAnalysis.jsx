@@ -85,19 +85,22 @@ function TwitterAnalysis({ id }) {
   }, [id, startDate]);
 
   return (
-    <div className={css.container}>
-      <div className={css.pieGraph}>
-        <Sentiment tweetData={doughnutTweetData} />
+    <div>
+      <div className={css.container}>
+        <div className={css.pieGraph}>
+          <Sentiment tweetData={doughnutTweetData} />
+        </div>
+        <div className={css.otherGraph}>
+          <Graph tweetData={tweetData} likedTweetsData={likedTweetsData} retweetData={retweetData} />
+          <PopularWords tweetData={tweetData} />
+        </div>
       </div>
-      <div className={css.otherGraph}>
-        <Graph tweetData={tweetData} likedTweetsData={likedTweetsData} retweetData={retweetData} />
-        <PopularWords tweetData={tweetData} />
+      <div className={css.backContainer}>
+        <Link to="/" style={{ textDecoration: 'none' }}>
+          <button type="button" className={css.backButton}>Return to Start Screen</button>
+        </Link>
       </div>
-      <Link to="/">
-        <button type="button">Back</button>
-      </Link>
     </div>
-
   );
 }
 

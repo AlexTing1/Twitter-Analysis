@@ -33,10 +33,12 @@
   text-align:center;
   transition: all 0.15s;
   background-color: turquoise;
+
 }
 .setButton:hover{
   text-shadow: 0 0 2em rgba(255,255,255,1);
   color:#FFFFFF;
+  cursor: pointer;
   /* border-color:#FFFFFF; */
 }
 
@@ -57,10 +59,12 @@
   transition: all 0.15s;
   background-color: turquoise;
   margin-top: 10px;
+
 }
 .startButton:hover{
   text-shadow: 0 0 2em rgba(255,255,255,1);
   color:#FFFFFF;
+  cursor: pointer;
   /* border-color:#FFFFFF; */
 }
 /*   @media all and (max-width:30em){
